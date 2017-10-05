@@ -1,216 +1,130 @@
+/***************************************************************************************************
+ *
+ * @author Shivam Khandelwal, Preshit Harlikar
+ * @file conversion.h
+ * @brief This header file includes data conversion function declarations.
+ * @date October 2, 2017
+ *
+ * long decription - The conversion.c file includes data conversion functions for -
+ *                      1) integer to ascii string (my_itoa())
+ *                      2) ascii string to 32-bit signed integer (my_atoi())
+ *                      3) little endian to big endian (little_to_big32())
+ *                      4) big endian to little endian (big_to_little32())
+ *
+ ***************************************************************************************************/
+
 #ifndef CONVERSION_H_INCLUDED
 #define CONVERSION_H_INCLUDED
+
+/************* including standard libraries*************/
 
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
 
+/*******************************************************/
 
+/********************************** my_itoa() **********************************************************
+ *
+ * @name  my_itoa(int32_t data,uint8_t* ptr, uint32_t base)
+ * @brief function to convert a signed 32-bit integer to an ascii string and store it at memory loaction
+ * @param 1) data - signed 32-bit integer in decimal.
+ *        2) *ptr - pointer to a memory location.
+ *        3) base - base to which data is converted.
+ *
+ * long description - This function converts a standard decimal integer (base 10) to number
+ *                    of specified base. The sign of the decimal number(data)is first determined
+ *                    specified memory location (*ptr). The remainder after taking modulus with base
+ *                    and then stored at (using % operator) is converted to ascii character and
+ *                    stored at next memory location (*(ptr + 1)). A variable 'l' is initialized to
+ *                    zero and incremented to determine the length of string. The decimal number is
+ *                    then divided until it becomes zero. After each modulus operation, ptr is
+ *                    incremented and remainder is stored in *ptr. The characters stored in memory
+ *                    locations - (ptr + 1) to (ptr + l) are reversed in order to store the ascii
+ *                    string in correct format. Lastly, the length of the ascii string (including
+ *                    sign) 'l' is returned by the function.
+ *
+ * @return length of ascii string (uint8_t l)
+ *
+ ******************************************************************************************************/
+
+/*********************************** my_itoa function declaration **************************************/
 
 uint8_t my_itoa(int32_t data,uint8_t* ptr, uint32_t base);
-/*{
-    if((base<17)&&(base>1))
-    {
-       uint8_t s = 0;
-        uint32_t l=0;
 
-       if(data==0)
-       {
-           *ptr =48;
-           l=l+1;
-           return l;
-       }
-
-       if(data>0)
-       {
-           *ptr = 43;
-           data = data;
-           l=l+1;
-
-       }
-
-       else if(data<0)
-       {
-           *ptr = 45;
-           data = -data;
-           l=l+1;
-       }
+/******************************************************************************************************/
 
 
-       while(data != 0)
-       {
-            ptr++;
-            s = data%base;
-            if(s>9)
-            {
-               s = s - 9;
-               s = s + 64;
-            }
-            else
-            {
-               s = s + 48;
-            }
+/********************************** my_atoi() *****************************************************
+ *
+ * @name  my_atoi(uint8_t* ptr, uint8_t digits, uint32_t base)
+ * @brief function to convert an ascii string to a signed 32-bit integer.
+ * @param 1) *ptr - pointer to a memory location.
+ *        2) digits - length of ascii string(including sign).
+ *        3) base - base to which data is converted.
+ *
+ * long description - This function converts an ascii string (number of specified base stored
+ *                    as an ascii string at the specified memory location(*ptr)) to a signed
+ *                    32-bit integer(int32_t value). The sign of the number is determined
+ *                    by comparing data at ptr location. Data is read from consecutive memory
+ *                    locations (from (ptr+1) to (ptr + digits) and converted to decimal integer
+ *                    ( by multiplying base^n to each number read from memory location and adding
+ *                    them). Finally, the signed decimal integer is returned by the function.
+ *
+ * @return signed 32-bit integer in decimal (int32_t value)
+ *
+ *************************************************************************************************/
 
-            *ptr = s;
-            data = data/base;
-            l++;
-       }
-
-        ptr = ptr - l;
-
-        uint8_t t;
-
-        uint8_t i=2,j=l;
-
-        while(i<j)
-        {
-            t= *(ptr+i);
-            *(ptr+i)=*(ptr+j);
-            *(ptr+j)=t;
-            i++;
-            j--;
-        }
-
-        return l;
-    }
-
-    else
-    {
-        printf("\nError: Invalid parameters\n");
-        return 0;
-    }
-}*/
-
-
-
+/******************* my_atoi function declaration **************************/
 
 int32_t my_atoi(uint8_t *ptr, uint8_t digits, uint32_t base);
-/*{
-	if((base>1) && (base<17))
-	{
-		int32_t counter = 1;
-		int32_t multiplier = 1;
-		uint8_t sign = 0;
 
-		int32_t value = 0;
+/***************************************************************************/
 
-		uint8_t t;
+/********************************** little_to_big32() ********************************************
+ *
+ * @name  little_to_big32(uint32_t *data, uint32_t length)
+ * @brief function to convert little endian to big endian.
+ * @param 1) *data - pointer to a memory location.
+ *        2) length - length of ascii string(including sign).
+ *
+ * long description - This function converts data stored at memory locations (from (data) to
+ *                    (data + length -1)) from little endian to big endian format for a 32-bit
+ *                    word size. Each byte value is stored in uint8_t variable (a1,a2,a3,a4 to
+ *                    break and shift the 32-bit data at memory location((data + b)). After each
+ *                    conversion memory location is incremented till the data of all bytes is
+ *                    converted.
+ *
+ * @return 0 if function is executed successfully.
+ *
+ *************************************************************************************************/
 
-        uint8_t i=1,j=digits-1;
-
-        if(*ptr == 43)
-		{
-			sign = 0;
-		}
-
-		else if(*ptr==45)
-		{
-			sign = 1;
-		}
-
-        while(i<j)
-        {
-            t= *(ptr+i);
-            *(ptr+i)=*(ptr+j);
-            *(ptr+j)=t;
-            i++;
-            j--;
-        }
-
-		while(counter < digits)
-		{
-			ptr++;
-			uint8_t k = 0;
-			k = *ptr;
-
-			if((k > 47) && (k < 58))
-			{
-				k = k - 48;
-			}
-
-			else
-			{
-				k = k - 55;
-			}
-
-			uint8_t p;
-			for(p = 1; p < counter; p++)
-			{
-				multiplier = multiplier*base;
-			}
-
-			value = value +k*multiplier;
-			multiplier = 1;
-			counter++;
-		}
-
-		if(sign == 0)
-		{
-			value = value;
-		}
-
-		else if(sign==1)
-		{
-			value = -value;
-		}
-
-		return value;
-	}
-
-	else
-	{
-		printf("\nError - Invalid Parameters\n");
-		return 0;
-	}
-}*/
-
-
+/***************************** little_to_big32 function declaration ********************************/
 
 int8_t little_to_big32(uint32_t *data, uint32_t length);
-/*{
-    uint32_t b = 0;
-    while(b < length)
-    {
-        uint32_t a = *(data + b);
 
-        int8_t a1,a2,a3,a4;
-        a1 = (a & 0x000000ff);
-        a2 = (a & 0x0000ff00) >> 8;
-        a3 = (a & 0x00ff0000) >> 16;
-        a4 = (a & 0xff000000) >> 24;
+/********************************** big_to_little32() ********************************************
+ *
+ * @name  big_to_little32(uint32_t *data, uint32_t length)
+ * @brief function to convert big endian to little endian.
+ * @param 1) *data - pointer to a memory location.
+ *        2) length - length of ascii string(including sign).
+ *
+ * long description - This function converts data stored at memory locations (from (data) to
+ *                    (data + length -1)) from big endian to little endian format for a 32-bit
+ *                    word size. Each byte value is stored in uint8_t variable (a1,a2,a3,a4 to
+ *                    break and shift the 32-bit data at memory location((data + b)). After each
+ *                    conversion memory location is incremented till the data of all bytes is
+ *                    converted.
+ *
+ * @return 0 if function is executed successfully.
+ *
+ *************************************************************************************************/
 
-        a = ((a1<<24)|(a2<<16)|(a3<<8)|(a4));
-
-        *(data + b) = a;
-        b++;
-
-    }
-    return 0;
-
-}*/
-
+/***************************** big_to_little32 function declaration ********************************/
 
 int8_t big_to_little32(uint32_t *data, uint32_t length);
-/*{
-    uint32_t a = 0;
-    while(a < length)
-    {
-        uint32_t b = *(data + a);//04_03_02_01
 
-        int8_t b1,b2,b3,b4;
-        b1 = (b & 0xff000000) >> 24;//00_00_00_04
-        b2 = (b & 0x00ff0000) >> 16;//00_00_00_03
-        b3 = (b & 0x0000ff00) >> 8; //00_00_00_02
-        b4 = (b & 0x000000ff);      //00_00_00_01
-
-        b = ((b1)|(b2<<8)|(b3<<16)|(b4<<24));//01_02_03_04
-
-        *(data + a) = b;
-        a++;
-
-    }
-    return 0;
-}*/
-
+/*************************************************************************************************/
 
 #endif // CONVERSION_H_INCLUDED

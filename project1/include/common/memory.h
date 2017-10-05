@@ -1,142 +1,179 @@
+/***************************************************************************************************
+ *
+ * @author Preshit Harlikar, Shivam Khandelwal
+ * @file memory.c
+ * @brief This file includes memory manipulation function declarations.
+ * @date October 1, 2017
+ *
+ * long decription - The memory.h file includes memory manipulation function declarations for -
+ *                      1) moving bytes of data from source to destination(my_memmove())
+ *                      2) copying bytes of data from source to destination(my_memcpy())
+ *                      3) setting bytes of data to a specified value(my_memset())
+ *                      4) setting bytes of data to zero(my_memzero())
+ *                      5) reversing bytes of data at a specified memory loaction(my_reverse())
+ *                      6) reserving a specified number of words at a particular
+ *                         memory location.(reserve_words())
+ *                      7) free a dynamic memory allocation by providing the pointer src to
+ *                         the function(free_words())
+ *
+ ***************************************************************************************************/
+
 #ifndef MEMORY_H_INCLUDED
 #define MEMORY_H_INCLUDED
 
+/************* including standard libraries*************/
+
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
+#include <math.h>
+
+/*******************************************************/
 
 
+/********************************** my_memmove() ********************************************
+ *
+ * @name  *my_memmove(uint8_t * src, uint8_t * dst, size_t length)
+ * @brief function to move length of bytes data from source to destination.
+ * @param 1) *src - pointer to a source memory location.
+ *        2) *dst - pointer to a destination memory location
+ *        3) length - length of data bytes to be moved.
+ *
+ * long description - This function takes two byte pointers (one source and one destination)
+ *                    and a length of bytes to copy from the source location (src) to the
+ *                    destination(dst). This is done by alloocating a length of bytes using
+ *                    'malloc' function. Data is first copied to an intermediate location (temp)
+ *                    from source location(src). Then the data is copied from temp to destination
+ *                    location(dst).Thus, the data is copied from source to destination even if there
+ *                    is an overlap. Copy occurs with no data corruption. Finally, the function
+ *                    returns destination location
+ *
 
+ *
+ * @return dst - destination location.
+ *
+ *************************************************************************************************/
 
-//MY_MOVE
+/**************************** my_memmove() function declaration **********************************/
+
 uint8_t *my_memmove(uint8_t * src, uint8_t * dst, size_t length);
-/*{
-    size_t i;
-    uint8_t *temp=malloc(length);
-    for(i=0;i<length;i++)
-    {
-        *(temp+i)=*(src+i);
-    }
 
-    for(i=0;i<length;i++)
-    {
-        *(dst+i)=*(temp+i);
-    }
+/********************************** my_memcpy() *************************************************
+ *
+ * @name  *my_memmove(uint8_t * src, uint8_t * dst, size_t length)
+ * @brief function to move length of bytes data from source to destination.
+ * @param 1) *src - pointer to a source memory location.
+ *        2) *dst - pointer to a destination memory location
+ *        3) length - length of data bytes to be moved.
+ *
+ * long description - This function takes two byte pointers (one source and one destination)
+ *                    and a length of bytes to copy from the source location (src) to the
+ *                    destination(dst). Data is copied from source location(src) to destination
+ *                    location(dst).Is there is an overlap in source(src) and detination(dst)
+ *                    memory locations, copy occurs but the data corrupts. Finally, the function
+ *                    returns destination location
+ *
 
-    return dst;
-}*/
+ *
+ * @return dst - destination location.
+ *
+ *************************************************************************************************/
 
-
-//MY_CPY
 uint8_t * my_memcpy(uint8_t * src, uint8_t * dst, size_t length);
-/*{
-    int i;
-    if (src == dst)
-    {
-        return dst;
-    }
-    else if(src > dst)
-    {
-        for( i = 0; i < length-1; i ++)
-        {
-            *(dst+i) = *(src+i);
-
-        }
-
-    }
-    else if(src < dst)
-    {
-        for ( i = length-1; i >= 0; i--)
-        {
-            *(dst+i) = *(src+i);
-        }
-    }
-    return dst;
-}*/
 
 
-//MY_SET
+/********************************** my_memset() *************************************************
+ *
+ * @name  my_memset(uint8_t * src, size_t length, uint8_t value)
+ * @brief function to set a length of  data bytes to a specified value
+ * @param 1) *src - pointer to a source memory location.
+ *        2) length - length of data bytes to be set to the specified value.
+ *        3) value - value to be set for each byte
+ *
+ * long description - This function takes a pointer to a source memory location(src) and
+ *                    a consecutive length in bytes are set to the specified value. The function
+ *                    returns a pointer to the source(src).
+ *
+ * @return src - source location.
+ *
+ *************************************************************************************************/
+
+/**************************** my_memset() function declaration ************************************/
+
 int8_t * my_memset(uint8_t * src, size_t length, uint8_t value);
-/*{
-    int i;
 
-    for(i=0;i<length;i++)
-    {
-        *(src+i)=value;
-    }
-    //return src;
-    return 0;
-}*/
+/********************************** my_memzero() *************************************************
+ *
+ * @name  my_memzero(uint8_t * src, size_t length)
+ * @brief function to set a length of  data bytes zero.
+ * @param 1) *src - pointer to a source memory location.
+ *        2) length - length of data bytes to be set to zero.
+ *
+ * long description - This function takes a pointer to a source memory location(src) and
+ *                    a consecutive length in bytes are set to zero. The function
+ *                    returns a pointer to the source(src).
+ *
+ * @return src - source location.
+ *
+ *************************************************************************************************/
 
+/**************************** my_memzero() function declaration ************************************/
 
-//MY_SETZERO
 uint8_t * my_memzero(uint8_t * src, size_t length);
-/*{
-    int i;
 
-    for(i=0;i<length;i++)
-    {
-        *(src+i)=0;
-    }
-    return src;
-}*/
+/********************************** my_reverse() *************************************************
+ *
+ * @name  my_reverse(uint8_t * src, size_t length)
+ * @brief function to reverse a length of data bytes.
+ * @param 1) *src - pointer to a source memory location.
+ *        2) length - length of data bytes to be reversed.
+ *
+ * long description - This function takes a pointer to a source memory location(src) and
+ *                    a consecutive length in bytes are reversed. The function
+ *                    returns a pointer to the source(src) if successfully executed.
+ *
+ * @return src - source location if reverse is successful else returns 0.
+ *
+ *************************************************************************************************/
 
+/**************************** my_reverse() function declaration ************************************/
 
-//MY_REVERSE
 uint8_t * my_reverse(uint8_t * src, size_t length);
-/*{
-    int i;
-    size_t j=length;
-    int k=0;
-    uint8_t *temp=malloc(j*sizeof(size_t));
 
-    for(i=0;i<length;i++)
-    {
-        *(temp+i)=*(src+i);
-    }
+/********************************** reserve_words() *************************************************
+ *
+ * @name  reserve_words(size_t length)
+ * @brief function to reserve a length of bytes.
+ * @param length - length of bytes to be reserved.
+ *
+ *
+ * long description - This function takes a pointer to a memory location(temp) and
+ *                    a specified length in bytes are reserved using 'malloc' function.
+ *                    The function returns a pointer to the memory location(temp).
+ *
+ * @return temp - memory location for reserved bytes.
+ *
+ *************************************************************************************************/
 
-    for(i=0;i<length;i++)
-    {
-        j--;
-        *(src+j)=*(temp+i);
-    }
+/**************************** reserve_words() function declaration ************************************/
 
-    j=length;
-
-    for(i=0;i<length;i++)
-    {
-        j--;
-        if(*(src+i)==*(temp+j))
-        {
-            k++;
-        }
-    }
-
-    if (k==length)
-    {
-        return src;
-    }
-    else return 0;
-}*/
-
-
-//RESERVE_WORDS
 uint8_t * reserve_words(size_t length);
-/*{
-    //printf("%d\n",length);
-    //uint8_t a[length];
-    //uint8_t *temp=a;
-    uint8_t *temp = malloc(length*sizeof(size_t));
 
-    return (temp);
-}*/
+/********************************** free_words() *************************************************
+ *
+ * @name  free_words(uint32_t * src)
+ * @brief function to free a dynamic memory allocation.
+ * @param *src - pointer to source memory location.
+ *
+ *
+ * long description - This function frees a dynamic memory allocation by providing the pointer src to
+ *                    the function
+ *
+ * @return void
+ *
+ *************************************************************************************************/
 
+/**************************** freee_words() function declaration ************************************/
 
-//FREE WORDS
 void free_words(uint32_t * src);
-/*{
-    free(src);
-}*/
-
 
 #endif // MEMORY_H_INCLUDED
