@@ -26,7 +26,7 @@ CB_t Rx_Buffer;
 
 uint8_t Rx_Data;
 uint8_t Tx_Data;
-uint8_t char_count[4];
+uint8_t character_count[5];
 
 /********************************** Table_Stats() *****************************************************
  *
@@ -47,15 +47,17 @@ void Table_Stats()
 {
 	/*----- Variable and Array Declaration ------------------------ ---------------------*/
 
-    uint8_t char_str[4][41]={NUM,ALPHA,PUNC,MISC};
+    uint8_t char_str[5][41]={NUM,ALPHA,PUNC,MISC,TOTAL};
     uint8_t l;
     uint8_t k;
 
-
+    character_count[4] = 0;
+    for(l=0;l<4;l++){
+    character_count[4] = character_count[4] + character_count[l];}
 
     /*-----  ------------------------ ---------------------*/
 
-    for(k=0;k<4;k++)
+    for(k=0;k<5;k++)
     {
     	for(l=0;l<41;l++)
     	{
@@ -63,11 +65,11 @@ void Table_Stats()
     	}
 
     	uint8_t buff[4];
-    	my_itoa(char_count[k],buff,10);
+    	my_itoa(character_count[k],buff,10);
 
     	CB_buffer_add_item(&Tx_Buffer, &buff[1]);
     	CB_buffer_add_item(&Tx_Buffer, &buff[2]);
-    	char_count[k] = 0;
+    	character_count[k] = 0;
 
     	for(l=0;l<4;l++){
     		buff[l] = 0;
@@ -78,6 +80,11 @@ void Table_Stats()
     	line = 0x0a;
     	CB_buffer_add_item(&Tx_Buffer, &line);
     }
+
+    uint8_t line = 0x0d;
+    CB_buffer_add_item(&Tx_Buffer, &line);
+    line = 0x0a;
+    CB_buffer_add_item(&Tx_Buffer, &line);
 
     /*----- Enabling Transmit Interrupt --------------------------- ---------------------*/
 
@@ -104,19 +111,19 @@ void project_2()
 
             if((Rxd_Data>47) && (Rxd_Data<58))
             {
-                char_count[0]++;
+            	character_count[0]++;
                 Rxd_Data=0;
             }
 
             else if(((Rxd_Data>64) && (Rxd_Data<91))||((Rxd_Data>96) && (Rxd_Data<123)))
             {
-            	char_count[1]++;
+            	character_count[1]++;
                 Rxd_Data=0;
             }
 
             else if(((Rxd_Data>32) && (Rxd_Data<48))||((Rxd_Data>57) && (Rxd_Data<65))||((Rxd_Data>90) && (Rxd_Data<97))||((Rxd_Data>122) && (Rxd_Data<127)))
             {
-            	char_count[2]++;
+            	character_count[2]++;
                 Rxd_Data=0;
             }
 
@@ -128,7 +135,7 @@ void project_2()
 
             else if(((Rxd_Data>90)&&(Rxd_Data<97))||(Rxd_Data==127)||(Rxd_Data==27))
             {
-            	char_count[3]++;
+            	character_count[3]++;
                 Rxd_Data=0;
             }
 
