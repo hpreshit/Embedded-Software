@@ -9,7 +9,7 @@ uint32_t *little_to_big32(uint32_t *data, uint32_t length)
 {
     if(data==NULL)
    	return NULL;
-    
+
     else
     {
     uint32_t b = 0; // variable b initialized for loop condition
@@ -37,7 +37,7 @@ uint32_t *big_to_little32(uint32_t *data, uint32_t length)
 {
     if(data==NULL)
 	return NULL;
- 
+
     else
     {
     uint32_t a = 0;  // variable a initialized for loop condition

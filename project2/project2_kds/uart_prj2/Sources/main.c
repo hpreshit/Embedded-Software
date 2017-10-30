@@ -5,7 +5,7 @@
 
 int main(void)
 {
-//#ifdef -DPROJECT2
+//#ifdef PROJECT2
 	project_2();
 //#endif
 }

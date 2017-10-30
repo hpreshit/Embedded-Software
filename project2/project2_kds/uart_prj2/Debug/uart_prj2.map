@@ -1043,14 +1043,14 @@ LOAD c:/freescale/kds_v3/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/armv6-m/cr
                 0x00000001                ASSERT ((__StackLimit >= __HeapLimit), region m_data overflowed with stack and heap)
 OUTPUT(uart_prj2.elf elf32-littlearm)
 
-.debug_info     0x00000000     0x1681
+.debug_info     0x00000000     0x1682
  .debug_info    0x00000000      0x2a4 ./Sources/circbuf.o
  .debug_info    0x000002a4      0x161 ./Sources/conversion.o
  .debug_info    0x00000405       0xa8 ./Sources/main.o
  .debug_info    0x000004ad      0x2dc ./Sources/project2.o
  .debug_info    0x00000789      0x806 ./Sources/uart.o
- .debug_info    0x00000f8f       0x8e ./Project_Settings/Startup_Code/startup_MKL25Z4.o
- .debug_info    0x0000101d      0x664 ./Project_Settings/Startup_Code/system_MKL25Z4.o
+ .debug_info    0x00000f8f       0x8f ./Project_Settings/Startup_Code/startup_MKL25Z4.o
+ .debug_info    0x0000101e      0x664 ./Project_Settings/Startup_Code/system_MKL25Z4.o
 
 .debug_abbrev   0x00000000      0x5c0
  .debug_abbrev  0x00000000       0xec ./Sources/circbuf.o
@@ -1129,28 +1129,28 @@ OUTPUT(uart_prj2.elf elf32-littlearm)
  .debug_macro   0x0000a51a       0x7e ./Project_Settings/Startup_Code/system_MKL25Z4.o
  .debug_macro   0x0000a598       0x4c ./Project_Settings/Startup_Code/system_MKL25Z4.o
 
-.debug_line     0x00000000     0x121d
+.debug_line     0x00000000     0x1222
  .debug_line    0x00000000      0x2e8 ./Sources/circbuf.o
  .debug_line    0x000002e8      0x26f ./Sources/conversion.o
  .debug_line    0x00000557      0x2be ./Sources/main.o
- .debug_line    0x00000815      0x38a ./Sources/project2.o
- .debug_line    0x00000b9f      0x388 ./Sources/uart.o
- .debug_line    0x00000f27       0x7b ./Project_Settings/Startup_Code/startup_MKL25Z4.o
- .debug_line    0x00000fa2      0x27b ./Project_Settings/Startup_Code/system_MKL25Z4.o
+ .debug_line    0x00000815      0x38c ./Sources/project2.o
+ .debug_line    0x00000ba1      0x38b ./Sources/uart.o
+ .debug_line    0x00000f2c       0x7b ./Project_Settings/Startup_Code/startup_MKL25Z4.o
+ .debug_line    0x00000fa7      0x27b ./Project_Settings/Startup_Code/system_MKL25Z4.o
 
-.debug_str      0x00000000    0x348ed
+.debug_str      0x00000000    0x348ba
  .debug_str     0x00000000     0x4d48 ./Sources/circbuf.o
                                0x4f22 (size before relaxing)
- .debug_str     0x00004d48      0x6e5 ./Sources/conversion.o
-                               0x5430 (size before relaxing)
- .debug_str     0x0000542d    0x2efe9 ./Sources/main.o
+ .debug_str     0x00004d48      0x6b2 ./Sources/conversion.o
+                               0x5431 (size before relaxing)
+ .debug_str     0x000053fa    0x2efe9 ./Sources/main.o
                               0x34712 (size before relaxing)
- .debug_str     0x00034416       0x77 ./Sources/project2.o
+ .debug_str     0x000343e3       0x77 ./Sources/project2.o
                               0x347c2 (size before relaxing)
- .debug_str     0x0003448d      0x37a ./Sources/uart.o
+ .debug_str     0x0003445a      0x37a ./Sources/uart.o
                               0x34b9a (size before relaxing)
- .debug_str     0x00034807       0xe6 ./Project_Settings/Startup_Code/system_MKL25Z4.o
-                              0x322a2 (size before relaxing)
+ .debug_str     0x000347d4       0xe6 ./Project_Settings/Startup_Code/system_MKL25Z4.o
+                              0x322a3 (size before relaxing)
 
 .comment        0x00000000       0x70
  .comment       0x00000000       0x70 ./Sources/circbuf.o
