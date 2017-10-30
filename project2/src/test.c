@@ -1,3 +1,17 @@
+/***************************************************************************************************
+ *
+ * @author Preshit Harlikar, Shivam Khandelwal
+ * @file test.c
+ * @brief This file includes cmocka test functions
+ * @date October 24, 2017
+ *
+ * long description - The uart.c file includes functions to -
+ *                      1) test memory.c
+ *                      2) test conversion.c
+ *                      3) test cirbuf.c
+ ***************************************************************************************************/
+
+
 #include "test_memory.h"
 #include "test_circbuf.h"
 #include "test_conversion.h"

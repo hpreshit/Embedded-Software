@@ -1,6 +1,5 @@
 /*
 ** ###################################################################
-
 **     Processors:          MKL25Z128FM4
 **                          MKL25Z128FT4
 **                          MKL25Z128LH4
@@ -112,7 +111,7 @@ extern "C" {
 #endif
 
 
-
+#define CLOCK_SETUP 1
 
 /* MCG mode constants */
 
