@@ -38,20 +38,20 @@ uint8_t log_tag[18][26] = 		   {"<LOG INITIALIZED>",
 void log_pass(Log_Status id0,uint8_t *log_payload, uint8_t length){
 
 	//START_CRITICAL();
-	Log_Struct log_struct;
-	log_struct.log_id0 = id0;
+	Log_Struct log_struct;					// log structure declared
+	log_struct.log_id0 = id0;				// log id
 	log_struct.timestamp = RTC->TSR;
 	log_struct.payload = log_payload;
 	log_struct.len_payload = length;
 
-	log_item(&log_struct);
+	log_item(&log_struct);					// calling log_item to add log structure to log buffer
 	//END_CRITICAL();
 	//log_flag = 0x78;
 
 }
 
 void log_flush(void){
-	while(Log_buffer_is_empty(&log_buffer) != LOG_BUFFER_EMPTY){
+	while(Log_buffer_is_empty(&log_buffer) != LOG_BUFFER_EMPTY){ //wait until log buffer is empty
 		Log_buffer_remove_item(&log_buffer, &Log_Tx_Data);
 		UART_send(&Log_Tx_Data);
 	}
@@ -60,9 +60,9 @@ void log_flush(void){
 
 void log_id(Log_Status id){
 	switch(id){
-		case LOG_INITIALIZED:
+		case LOG_INITIALIZED:								//matching log id to pass the required payload
 			log_pass(LOG_INITIALIZED,test_payload,10);
-			if(uart_flag != 0x43){
+			if(uart_flag != 0x43){							//send data using log flush if interrupt mode is not enabled
 			log_flush();}
 		    break;
 		case GPIO_INITIALIZED:
@@ -121,11 +121,11 @@ void log_id(Log_Status id){
 
 void log_item(Log_Struct *ab){
 
-	uint8_t buffer[80];
+	uint8_t buffer[80];							//buffer to store ascii values and add them to log buffer
 
 	my_itoa(ab->timestamp,buffer,10);
 	uint8_t i = 1;
-			while(buffer[i] != 0){
+			while(buffer[i] != 0){					//adding timestamp to log buffer
 				Log_buffer_add_item(&log_buffer, &buffer[i]);
 				i++;
 				buffer[i-1] = 0;
@@ -141,7 +141,7 @@ void log_item(Log_Struct *ab){
 		Log_buffer_add_item(&log_buffer,&i);
 
 	i = 0;
-		while(log_tag[y-100][i] != 0){
+		while(log_tag[y-100][i] != 0){							// adding log tag to log buffer
 			Log_buffer_add_item(&log_buffer, &log_tag[y-100][i]);
 			i++;
 		}
@@ -151,7 +151,7 @@ void log_item(Log_Struct *ab){
 
 	i = 1;
 		while(buffer[i] != 0){
-			Log_buffer_add_item(&log_buffer, &buffer[i]);
+			Log_buffer_add_item(&log_buffer, &buffer[i]);		//adding log id to log buffer
 			i++;
 			buffer[i-1] = 0;
 		}
@@ -161,7 +161,7 @@ void log_item(Log_Struct *ab){
 	i=' ';
 	Log_buffer_add_item(&log_buffer,&i);
 
-	if(ab->payload != NULL){
+	if(ab->payload != NULL){								//pass payload and length only if payload is not null
 		my_itoa(ab->len_payload,buffer,10);
 		i=1;
 		while(buffer[i] != 0){
