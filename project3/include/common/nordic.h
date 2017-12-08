@@ -17,8 +17,8 @@
 
 #define nrf_chip_enable()  			(PTD_BASE_PTR->PCOR = 1)
 #define nrf_chip_disable() 			(PTD_BASE_PTR->PSOR = 1)
-#define nrf_transmit_enable()
-#define nrf_transmit_disable()
+#define nrf_transmit_enable()		(PTD_BASE_PTR->PCOR = 1<<5)
+#define nrf_transmit_disable()		(PTD_BASE_PTR->PSOR = 1<<5)
 
 #define CONFIG_REG 			(0x00)
 #define EN_AA_REG 			(0x01)
@@ -77,6 +77,7 @@
 #define FIFO_STATUS_TX_EMPTY  (FIFO_STATUS_REG & (uint8_t)((uint8_t)(1)<<4))
 #define FIFO_STATUS_RX_FULL   (FIFO_STATUS_REG & (uint8_t)((uint8_t)(1)<<1))
 #define FIFO_STATUS_RX_EMPTY  (FIFO_STATUS_REG & (uint8_t)((uint8_t)(1)<<0))
+
 
 uint8_t nrf_read_register(uint8_t reg);
 void nrf_write_register(uint8_t reg, uint8_t value);

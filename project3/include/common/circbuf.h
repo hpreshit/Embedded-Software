@@ -1,9 +1,21 @@
-/*
- * circbuf.h
+/***************************************************************************************************
  *
- *  Created on: 05-Dec-2017
- *      Author: defaultuser0
- */
+ * @author  Preshit Harlikar, Shivam Khandelwal
+ * @file circbuf.h
+ * @brief This file includes Circular Buffer functions
+ * @date October 20, 2017
+ *
+ * long description - The circbuf.c file includes functions to -
+ *                      1) add data to circular buffer(CB_buffer_add_item())
+ *                      2) remove data from circular buffer (CB_buffer_remove_item())
+ *                      3) check whether or not buffer is full(CB_is_full())
+ *                      4) check whether or not buffer is empty(CB_is_empty())
+ *                      5) peek at a location from head (CB_peek())
+ *                      6) initialize circular buffer (CB_init())
+ *                      7) destroy a circular buffer (CB_destroy())
+ *
+ *
+ ***************************************************************************************************/
 
 #ifndef SOURCES_CIRCBUF_H_
 #define SOURCES_CIRCBUF_H_
@@ -15,6 +27,9 @@
 #include "uart.h"
 #include "conversion.h"
 #include "logger.h"
+#include "project3.h"
+
+/*----- Structure for Circular Buffer -------------------------------------*/
 
 typedef struct{
 uint8_t *buffer;
@@ -25,6 +40,8 @@ uint8_t length;
 uint8_t count;
 }CB_t;
 
+/*----- Enum for Circular Buffer and UART ---------------------------------*/
+
 typedef enum{
 BUFFER_FULL=1,
 BUFFER_EMPTY=2,
@@ -34,13 +51,8 @@ PEEK_LENGTH_ERROR=5
 
 }CB_status;
 
-
-extern uint8_t Tx_Data;
-extern uint8_t Rx_Data;
 extern CB_t Tx_Buffer;
 extern CB_t Rx_Buffer;
-
-/*----- Enum for Circular Buffer and UART ---------------------------------*/
 
 
 /********************************** CB_buffer_add_item() *****************************************************

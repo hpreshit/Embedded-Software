@@ -1,13 +1,3 @@
-/*
- * logbuf.h
- *
- *  Created on: 03-Dec-2017
- *      Author: defaultuser0
- */
-
-#ifndef SOURCES_LOGBUF_H_
-#define SOURCES_LOGBUF_H_
-
 
 /***************************************************************************************************
  *
@@ -28,8 +18,8 @@
  *
  ************************************************************************************************/
 
-
-
+#ifndef SOURCES_LOGBUF_H_
+#define SOURCES_LOGBUF_H_
 
 /*----- Header-Files -------------------------------------------------------*/
 
@@ -44,7 +34,7 @@ uint8_t *buffer;
 uint8_t *buffer_end;
 uint8_t *head;
 uint8_t *tail;
-uint8_t length;
+uint16_t length;
 uint8_t count;
 }Log_t;
 
@@ -55,7 +45,7 @@ typedef enum{
 LOG_BUFFER_FULL=11,
 LOG_BUFFER_EMPTY=80,
 LOG_SUCCESS=13,
-LOG_NULL_ERROR=14,
+LOG_NULL_ERROR=0,
 LOG_PEEK_LENGTH_ERROR=15,
 LOG_TX_SUCCESS=16,
 LOG_RX_SUCCESS=17,
@@ -169,7 +159,7 @@ Log_Buffer_Status Log_buffer_peek(Log_t *log, uint8_t peek_pos, uint8_t *peek_pt
 
 /******************************** CB_init() function declaration ***********************************/
 
-Log_Buffer_Status Log_buffer_init(Log_t *log, uint8_t length);
+Log_Buffer_Status Log_buffer_init(Log_t *log, uint16_t length);
 
 /********************************** CB_destroy() *****************************************************
  *

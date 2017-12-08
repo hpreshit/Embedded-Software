@@ -9,6 +9,7 @@
 #define SOURCES_GPIO_H_
 
 #include "MKL25Z4.h"
+#include "project3.h"
 
 #define RED_LED_INIT		(GPIOB->PDDR |= 1 << 18)	//set port B pin 18 direction as output
 #define GREEN_LED_INIT		(GPIOB->PDDR |= 1 << 19)	//set port B pin 19 direction as output

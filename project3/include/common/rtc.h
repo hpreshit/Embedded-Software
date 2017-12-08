@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include "MKL25Z4.h"
+#include "project3.h"
 
 void RTC_init(void);
 void RTC_Seconds_IRQHandler(void);
