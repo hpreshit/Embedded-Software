@@ -8,10 +8,10 @@
 
 #include "rtc.h"
 #include "logger.h"
+#include "project3.h"
 
-void RTC_init(void){
-
-
+void RTC_init(void)
+{
 	SIM->SCGC6 |= SIM_SCGC6_RTC(1);
 	SIM->SCGC5 |= SIM_SCGC5_PORTC(1);
 
@@ -35,9 +35,7 @@ void RTC_init(void){
 	}
 
 	RTC_SR |= RTC_SR_TCE(1);
-	RTC_IER |= RTC_IER_TSIE(1); //Seconds interrupt enable
-
-
+	RTC_IER &= ~RTC_IER_TSIE(1); 	//Seconds interrupt disable
 
 	    /*Timer enable*/
 	//RTC_SR |= RTC_SR_TCE(1);
@@ -50,7 +48,7 @@ void RTC_init(void){
 void RTC_Seconds_IRQHandler(void){
 	//START_CRITICAL();
 	//GPIOB->PTOR |= 1<<18;
-	LOG(HEARTBEAT);
+	LOG(HEARTBEAT,NULL);
 	//END_CRITICAL();
 
 }

@@ -1,14 +1,6 @@
-/*
- * circbuf.c
- *
- *  Created on: 05-Dec-2017
- *      Author: defaultuser0
- */
-
-
 /***************************************************************************************************
  *
- * @author Shivam Khandelwal, Preshit Harlikar
+ * @author  Preshit Harlikar, Shivam Khandelwal
  * @file circbuf.c
  * @brief This file includes Circular Buffer functions
  * @date October 20, 2017
@@ -30,10 +22,11 @@
 
 #include "circbuf.h"
 
-uint8_t Tx_Data;
-uint8_t Rx_Data;
+/*----- Buffer Initialization ------------------------ ---------------------*/
+
 CB_t Tx_Buffer;
 CB_t Rx_Buffer;
+
 
 
 /********************************** CB_buffer_add_item() *****************************************************

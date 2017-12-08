@@ -1,14 +1,6 @@
-/*
- * logbuf.c
- *
- *  Created on: 03-Dec-2017
- *      Author: defaultuser0
- */
-
-
 /***************************************************************************************************
  *
- * @author Shivam Khandelwal, Preshit Harlikar
+ * @author  Preshit Harlikar, Shivam Khandelwal
  * @file circbuf.c
  * @brief This file includes Circular Buffer functions
  * @date October 20, 2017
@@ -224,7 +216,7 @@ Log_Buffer_Status Log_buffer_peek(Log_t *log, uint8_t peek_pos, uint8_t *peek_pt
 
 /******************************** CB_init() function definition ***********************************/
 
-Log_Buffer_Status Log_buffer_init(Log_t *log, uint8_t length)
+Log_Buffer_Status Log_buffer_init(Log_t *log, uint16_t length)
 {
     log->buffer = (uint8_t*)malloc(sizeof(uint8_t)*length);
     log->buffer_end = log->buffer + (sizeof(uint8_t)*length);

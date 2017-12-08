@@ -1,11 +1,47 @@
-/*
- * conversion.c
+/***************************************************************************************************
  *
- *  Created on: 03-Dec-2017
- *      Author: defaultuser0
- */
+ * @author Preshit Harlikar, Shivam Khandelwal
+ * @file conversion.c
+ * @brief This file includes data conversion functions
+ * @date October 2, 2017
+ *
+ * long decription - The conversion.c file includes data conversion function for -
+ *                      1) integer to ascii string (my_itoa())
+ *
+ ***************************************************************************************************/
+
+/************* including header** libraries*************/
 
 #include "conversion.h"
+
+/*******************************************************/
+
+/********************************** my_itoa() **********************************************************
+ *
+ * @name  my_itoa(int32_t data,uint8_t* ptr, uint32_t base)
+ * @brief function to convert a signed 32-bit integer to an ascii string and store it at memory loaction
+ * @param 1) data - signed 32-bit integer in decimal.
+ *        2) *ptr - pointer to a memory location.
+ *        3) base - base to which data is converted.
+ *
+ * long description - This function converts a standard decimal integer (base 10) to number
+ *                    of specified base. The sign of the decimal number(data)is first determined
+ *                    specified memory location (*ptr). The remainder after taking modulus with base
+ *                    and then stored at (using % operator) is converted to ascii character and
+ *                    stored at next memory location (*(ptr + 1)). A variable 'l' is initialized to
+ *                    zero and incremented to determine the length of string. The decimal number is
+ *                    then divided until it becomes zero. After each modulus operation, ptr is
+ *                    incremented and remainder is stored in *ptr. The characters stored in memory
+ *                    locations - (ptr + 1) to (ptr + l) are reversed in order to store the ascii
+ *                    string in correct format. Lastly, the length of the ascii string (including
+ *                    sign) 'l' is returned by the function.
+ *
+ * @return length of ascii string (uint8_t l)
+ *
+ ******************************************************************************************************/
+
+/*********************************** my_itoa function definition **************************************/
+
 
 uint8_t my_itoa(int32_t data,uint8_t* ptr, uint32_t base)
 {

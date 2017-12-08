@@ -11,8 +11,10 @@ uint8_t nrf_read_register(uint8_t reg)
 {
 	uint8_t a;
 	SPI_write_byte(R_REGISTER|reg);			//sending read command
+	delay();
 	SPI_read_byte();
 	SPI_write_byte(0xFF);					//sending dummy value
+	delay();
 	a=SPI_read_byte();						//reading value from register
 	return a;
 }
@@ -20,8 +22,10 @@ uint8_t nrf_read_register(uint8_t reg)
 void nrf_write_register(uint8_t reg, uint8_t value)
 {
 	SPI_write_byte(W_REGISTER|reg);			//sending write command
+	delay();
 	SPI_read_byte();
 	SPI_write_byte(value);					//sending value to be written
+	delay();
 	SPI_read_byte();
 }
 
@@ -87,10 +91,12 @@ void nrf_read_TX_ADDR(uint8_t *address)
 	uint8_t i;
 	nrf_chip_enable();						//chip enable
 	SPI_write_byte(R_REGISTER|TX_ADDR);		//sending read command in tx_addr register
+	delay();
 	SPI_read_byte();
 	for(i=0;i<5;i++)
 	{
 		SPI_write_byte(0xFF);				//sending dummy value
+		delay();
 		*(address+i) = SPI_read_byte();		//reading value from register and storing it in a pointer
 	}
 	nrf_chip_disable();						//chip disable
@@ -101,10 +107,12 @@ void nrf_write_TX_ADDR(uint8_t *tx_addr)
 	uint8_t i=0;
 	nrf_chip_enable();						//chip enable
 	SPI_write_byte(W_REGISTER|TX_ADDR);		//sending write command in tx_addr register
+	delay();
 	SPI_read_byte();
 	for(i=0;i<5;i++)
 	{
 		SPI_write_byte(*(tx_addr+i));		//writing value in tx_addr register
+		delay();
 		SPI_read_byte();
 	}
 	nrf_chip_disable();						//chip disable
