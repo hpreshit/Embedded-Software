@@ -29,7 +29,7 @@
 
 
 
-uint8_t uart_flag;
+uint8_t log_mode;
 /********************************** UART_configure() *****************************************************
  *
  * @name   -  UART_configure()
@@ -74,14 +74,17 @@ UART_status UART_configure()
 	UART0_C2 &= ~(UART0_C2_RE_MASK | UART0_C2_TE_MASK); 			/* Clear TE and RE */
 	UART0_C2 |=  (UART0_C2_RE_MASK | UART0_C2_TE_MASK); 			/* Set TE and RE */
 	UART0_C2 |= UART0_C2_RIE_MASK; 									/* Set RIE */
+	//UART0_C2 &= ~UART0_C2_TIE_MASK;
+	//UART0_C2 |= UART0_C2_TIE_MASK;
 
 	SIM_BASE_PTR->SCGC5 |= SIM_SCGC5_PORTB_MASK;
 	SIM_BASE_PTR->SCGC5 |= SIM_SCGC5_PORTD_MASK;
 
-	if(uart_flag == 0x43){
+	//if(log_mode == 0x43){
 	NVIC_SetPriority(UART0_IRQn,12);
 	//NVIC_CLearPendingIRQ(UART0_IRQn);
-	NVIC_EnableIRQ(UART0_IRQn);	}									/* Enable UART0 Interrupt */
+	NVIC_EnableIRQ(UART0_IRQn);
+	//}									/* Enable UART0 Interrupt */
 
 	return UART_CONFIG_SUCCESS;
 }
@@ -103,13 +106,9 @@ UART_status UART_configure()
 
 UART_status UART_send(uint8_t *data0)
 {
-	if(uart_flag == 0x43){
-		UART0_D = *data0;
-	}
-	else{
 		while(!(UART0_S1 & UART0_S1_TDRE_MASK));
 		UART0_D = *data0;
-	}												/* Writing data to UART0 data register */
+												/* Writing data to UART0 data register */
 	return TX_SUCCESS;
 }
 
@@ -132,7 +131,7 @@ UART_status UART_send(uint8_t *data0)
 UART_status UART_send_n(uint8_t *data0, uint8_t length)
 {
 	uint8_t i = 0;
-	if(uart_flag == 0x43){
+	if(log_mode == 0x43){
 		for(i=0;i<length;i++){
 			UART0_D = *(data0 + i);										/* Writing data to UART0 data register */
 		}
@@ -164,7 +163,7 @@ UART_status UART_send_n(uint8_t *data0, uint8_t length)
 
 UART_status UART_receive(uint8_t *data0)
 {
-	if(uart_flag == 0x43){
+	if(log_mode == 0x43){
 		*(data0) = UART0_D;
 	}
 	else{
@@ -193,7 +192,7 @@ UART_status UART_receive(uint8_t *data0)
 UART_status UART_receive_n(uint8_t *data0, uint8_t length)
 {
 	uint8_t i = 0;
-	if(uart_flag == 0x43){
+	if(log_mode == 0x43){
 		for(i=0;i<length;i++){
 			*(data0 + i) = UART0_D;							/* Reading data from UART0 data register */
 		}
@@ -225,37 +224,45 @@ UART_status UART_receive_n(uint8_t *data0, uint8_t length)
 
 UART_status UART0_IRQHandler(void)
 {
-	if((UART0_S1 & UART0_S1_TDRE_MASK) && (!CB_is_empty(&Tx_Buffer))){ /* Check if TDRE set and Transmit buffer is not empty */
-		CB_buffer_remove_item(&Tx_Buffer, &Tx_Data);				   /* Write data from Tx_Buffer to Tx_data */
-		UART_send(&Tx_Data);										   /* Send data from Tx_Data */
-		if(CB_is_empty(&Tx_Buffer)){								   /* Check if Transmit buffer is empty */
-			UART0_C2 &= ~UART0_C2_TIE_MASK;							   /* Clear TIE bit */
-		}
-		return TX_IRQ;
-	}
+	//if((UART0_S1 & UART0_S1_TDRE_MASK) && (!CB_is_empty(&Tx_Buffer))){ /* Check if TDRE set and Transmit buffer is not empty */
+	//	CB_buffer_remove_item(&Tx_Buffer, &Tx_Data);				   /* Write data from Tx_Buffer to Tx_data */
+	//	UART_send(&Tx_Data);										   /* Send data from Tx_Data */
+	//	if(CB_is_empty(&Tx_Buffer)){								   /* Check if Transmit buffer is empty */
+	//		UART0_C2 &= ~UART0_C2_TIE_MASK;							   /* Clear TIE bit */
+	//	}
+	//	return TX_IRQ;
+	//}
+
+	//__disable_irq();
+
 
 	if((UART0_S1 & UART0_S1_RDRF_MASK ) && (!CB_is_full(&Rx_Buffer))){ /* Check if RDRF set and Receive buffer is not full */
+		START_CRITICAL();
 		UART_receive(&Rx_Data);										   /* Write received data to Rx_Data */
 		CB_buffer_add_item(&Rx_Buffer, &Rx_Data);					   /* Add data from Rx_Data to Rx_Buffer */
 		if(CB_is_full(&Rx_Buffer)){									   /* Check if Receive buffer is full */
 			UART0_C2 &= ~UART0_C2_RIE_MASK;							   /* Clear RIE bit */
 		}
+		END_CRITICAL();
 		return RX_IRQ;
 	}
 
-	if((UART0_S1 & UART0_S1_TDRE_MASK) && ((Log_buffer_is_empty(&log_buffer)) != LOG_BUFFER_EMPTY)){ /* Check if TDRE set and Transmit buffer is not empty */
+	if((UART0_S1 & UART0_S1_TDRE_MASK) && (!(Log_buffer_is_empty(&log_buffer)))){ /* Check if TDRE set and Transmit buffer is not empty */
+		START_CRITICAL();
 			Log_buffer_remove_item(&log_buffer, &Log_Tx_Data);
-			//uart_flag = 0x43;/* Write data from Tx_Buffer to Tx_data */
+			//log_mode = 0x43;/* Write data from Tx_Buffer to Tx_data */
 			UART_send(&Log_Tx_Data);										   /* Send data from Tx_Data */
 			if(Log_buffer_is_empty(&log_buffer) == LOG_BUFFER_EMPTY){								   /* Check if Transmit buffer is empty */
 				UART0_C2 &= ~UART0_C2_TIE_MASK;							   /* Clear TIE bit */
 			}
+		END_CRITICAL();
 		return TX_IRQ;
 	}
 	else{
 		return UART_CONFIG_SUCCESS;
 
 	}
+	//__enable_irq();
 }
 
 
