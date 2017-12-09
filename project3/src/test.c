@@ -1,12 +1,44 @@
-/*
- * test.c
+/***************************************************************************************************
  *
- *  Created on: Dec 6, 2017
- *      Author: Preshit
- */
+ * @author  Preshit Harlikar, Shivam Khandelwal
+ * @file test.c
+ * @brief This file includes functions for testing profiling, spi and nrf
+ * @date November 29, 2017
+ *
+ * long description - The test.c file includes functions to -
+ *                      1) test profile time for memory functions dma,non-dma,stdlib) (profile_test())
+ *                      2) test read and write operation to nrf module (spi_nrf_test())
+ *                      3) test config read and write operation to nrf module (config_reg_test())
+ *                      4) test read and write operation to nrf module (tx_addr_test())
+ *                      5) test read and write operation to nrf module (rf_setup_test())
+ *                      6) test read and write operation to nrf module (rf_ch_reg_test())
+ *                      7) read the status register of nrf module (status_reg_test())
+ *                      8) read the status register of nrf module (fifo_status_reg_test())
+ *                      9) test and log on UART the success of read and write operations for nrf registers (transmit())
+ *                     10) test profiling time of memmove (stdlib) function (lib_memmove_test())
+ *                     11) test profiling time of memmove (non-dma) function (my_memmove_test())
+ *                     12) test profiling time of memmove (dma) function (dma_memmove_test())
+ *                     13) test profiling time of memset (dma) function (dma_memset_test())
+ *                     14) test profiling time of memset (non-dma) function (my_memset_test())
+ *                     15) test profiling time of memset (stdlib) function (lib_memset_test())
+ *
+ ***************************************************************************************************/
 
 #include "test.h"
 
+/********************************** profile_test()**********************************************************
+ *
+ * @name   -  profile_test()
+ * @brief  -  function to test profile time for memory functions dma,non-dma,stdlib)
+ * @param  -  none
+ *
+ * long description - This function passes log struct to log buffer.
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** profile_test() function definition ***********************************/
 
 void profile_test()
 {
@@ -86,6 +118,20 @@ void profile_test()
 	Rxd_Data=0;
 }
 
+/********************************** spi_nrf_test()()**********************************************************
+ *
+ * @name   -  spi_nrf_test()
+ * @brief  -  function to test read and write operation to nrf module
+ * @param  -  none
+ *
+ * long description - This function tests read and write operation to nrf module
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** spi_nrf_test() function definition ***********************************/
+
 void spi_nrf_test()
 {
 	SPI_init();								//initialize SPI
@@ -97,6 +143,19 @@ void spi_nrf_test()
 	fifo_status_reg_test();					//test function for fifo_status register
 	Rxd_Data=0;
 }
+
+/********************************** config_reg_test()**********************************************************
+ *
+ * @name   -  config_reg_test()
+ * @brief  -  function to test config read and write operation to nrf module.
+ * @param  -  none
+ * long description - This function tests config read and write operation to nrf module.
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** config_reg_test() function definition ***********************************/
 
 void config_reg_test()
 {
@@ -113,6 +172,20 @@ void config_reg_test()
 	}
 	SPI_flush();
 }
+
+/********************************** tx_addr_test()**********************************************************
+ *
+ * @name   -  tx_addr_test()
+ * @brief  -  function to test read and write operation to nrf module.
+ * @param  -  none
+ *
+ * long description - This function tests read and write operation to nrf module
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** tx_addr_test() function definition ***********************************/
 
 void tx_addr_test()
 {
@@ -141,6 +214,20 @@ void tx_addr_test()
 	SPI_flush();
 }
 
+/********************************** rf_setup_test()**********************************************************
+ *
+ * @name   -  rf_setup_test()
+ * @brief  -  function to test read and write operation to nrf module.
+ * @param  -  none
+ *
+ * long description - This function tests read and write operation to nrf module.
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** rf_setup_test() function definition ***********************************/
+
 void rf_setup_test()
 {
 	nrf_write_rf_setup(0x09);
@@ -156,6 +243,20 @@ void rf_setup_test()
 	}
 	SPI_flush();
 }
+
+/********************************** rf_ch_reg_test()**********************************************************
+ *
+ * @name   -  rf_ch_reg_test()
+ * @brief  -  function to test read and write operation to nrf module
+ * @param  -  none
+ *
+ * long description - This function tests read and write operation to nrf module
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** rf_ch_reg_test() function definition ***********************************/
 
 void rf_ch_reg_test()
 {
@@ -173,6 +274,20 @@ void rf_ch_reg_test()
 	SPI_flush();
 }
 
+/********************************** status_reg_test() **********************************************************
+ *
+ * @name   -  status_reg_test()
+ * @brief  -  function to read the status register of nrf module
+ * @param  -  none
+ *
+ * long description - This function reads the status register of nrf module
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** status_reg_test() function definition ***********************************/
+
 void status_reg_test()
 {
 	uint8_t status = nrf_read_status();
@@ -182,6 +297,20 @@ void status_reg_test()
 	SPI_flush();
 }
 
+/********************************** fifo_status_reg_test() **********************************************************
+ *
+ * @name   -  fifo_status_reg_test()
+ * @brief  -  function to read the fifo status register of nrf module
+ * @param  -  none
+ *
+ * long description - This function reads the fifo status register of nrf module
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** fifo_status_reg_test() function definition ***********************************/
+
 void fifo_status_reg_test()
 {
 	uint8_t fifo = nrf_read_fifo_status();
@@ -190,6 +319,20 @@ void fifo_status_reg_test()
 	uart_flush("SUCCESSFUL");
 	SPI_flush();
 }
+
+/********************************** transmit()**********************************************************
+ *
+ * @name   -  transmit()
+ * @brief  -  function to test and log on UART the success of read and write operations for nrf registers
+ * @param  -  result: result value obtained after operations.
+ *
+ * long description - This function tests and logs on UART the success of read and write operations for nrf registers
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** transmit() function definition ***********************************/
 
 void transmit(uint8_t result)
 {
@@ -221,6 +364,20 @@ void transmit(uint8_t result)
 		break;
 	}
 }
+
+/********************************** lib_memmove_test()**********************************************************
+ *
+ * @name   -  lib_memmove_test()
+ * @brief  -  function to test profiling time of memmove (stdlib) function
+ * @param  -  len: length of bytes to be tested
+ *
+ * long description - This function tests profiling time of memmove (stdlib) function
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** lib_memmove_test() function definition ***********************************/
 
 void lib_memmove_test(uint32_t len)
 {
@@ -255,6 +412,20 @@ void lib_memmove_test(uint32_t len)
 	time[3]='\0';
 }
 
+/********************************** my_memmove_test()**********************************************************
+ *
+ * @name   -  my_memmove_test()
+ * @brief  -  function to test profiling time of memmove (non-dma) function
+ * @param  -  len: length of bytes to be tested
+ *
+ * long description - This function tests profiling time of memmove (non-dma) function.
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** my_memmove_test() function definition ***********************************/
+
 void my_memmove_test(uint32_t len)
 {
 	uint32_t i=0;
@@ -287,6 +458,20 @@ void my_memmove_test(uint32_t len)
 	time[2]='\0';
 	time[3]='\0';
 }
+
+/********************************** dma_memmove_test()**********************************************************
+ *
+ * @name   -  dma_memmove_test()
+ * @brief  -  function to test profiling time of memmove (dma) function.
+ * @param  -  len: length of bytes to be tested
+ *
+ * long description - This function tests profiling time of memmove (dma) function.
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** dma_memmove_test() function definition ***********************************/
 
 void dma_memmove_test(uint32_t len)
 {
@@ -321,6 +506,20 @@ void dma_memmove_test(uint32_t len)
 	time[3]='\0';
 }
 
+/********************************** dma_memset_test()**********************************************************
+ *
+ * @name   -  dma_memset_test()
+ * @brief  -  function to test profiling time of memset (dma) function.
+ * @param  -  len: length of bytes to be tested
+ *
+ * long description - This function tests profiling time of memset (dma) function.
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** dma_memset_test() function definition ***********************************/
+
 void dma_memset_test(uint32_t len)
 {
 	uint32_t value = 10;
@@ -347,6 +546,20 @@ void dma_memset_test(uint32_t len)
 	time[3]='\0';
 }
 
+/********************************** my_memset_test()**********************************************************
+ *
+ * @name   -  my_memset_test()
+ * @brief  -  function to test profiling time of memset (non-dma) function.
+ * @param  -  len: length of bytes to be tested
+ *
+ * long description - This function tests profiling time of memset (non-dma) function.
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** my_memset_test() function definition ***********************************/
+
 void my_memset_test(uint32_t len)
 {
 	uint32_t value = 10;
@@ -372,6 +585,20 @@ void my_memset_test(uint32_t len)
 	time[2]='\0';
 	time[3]='\0';
 }
+
+/********************************** lib_memset_test()**********************************************************
+ *
+ * @name   -  lib_memset_test()
+ * @brief  -  function to test profiling time of memset (stdlib) function.
+ * @param  -  len: length of bytes to be tested
+ *
+ * long description - This function tests profiling time of memset (stdlib) function.
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
+/*********************************** lib_memset_test() function definition ***********************************/
 
 void lib_memset_test(uint32_t len)
 {
