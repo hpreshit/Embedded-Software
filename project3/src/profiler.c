@@ -17,6 +17,20 @@
 #include "profiler.h"
 #include "project3.h"
 
+/********************************** profiler_start() **********************************************************
+ *
+ * @name   -  profiler_start()
+ * @brief  -  function to configure the Systick profiler.
+ * @param  -  none
+ *
+ * long description - This function configures the Systick profiler.
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ profiler_start() function definition ***********************************/
+
 void profiler_start()
 {
 	SysTick->LOAD = SYSTICK_MAX_VALUE;
@@ -25,15 +39,58 @@ void profiler_start()
 	overflow=0;
 }
 
+/********************************** profiler_stop() **********************************************************
+ *
+ * @name   -  profiler_stop()
+ * @brief  -  function to disable profiling
+ * @param  -  none
+ *
+ * long description - This function disables profiling.
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ profiler_stop() function definition ***********************************/
+
 void profiler_stop()
 {
 	SysTick->CTRL = 0x00;
 }
 
+/********************************** gettime() **********************************************************
+ *
+ * @name   -  gettime()
+ * @brief  -  function to get systick val.
+ * @param  -  none
+ *
+ * long description - This function gets systick val
+ *
+ * @return -  systick value
+ *
+ ********************************************************************************************************/
+
+/************************************ gettime() function definition ***********************************/
+
 volatile uint32_t gettime()
 {
 	return SysTick->VAL;
 }
+
+/********************************** execution_time() **********************************************************
+ *
+ * @name   -  execution_time()
+ * @brief  -  function to calculate execution time.
+ * @param  -  start_time:systick val before code execution
+ * @param  -  end_time:systick val after code execution
+ *
+ * long description - This function calculates execution time.
+ *
+ * @return -  execution time
+ *
+ ********************************************************************************************************/
+
+/************************************ execution_time() function definition ***********************************/
 
 volatile uint32_t execution_time(uint32_t start_time,uint32_t end_time)
 {
@@ -43,6 +100,20 @@ volatile uint32_t execution_time(uint32_t start_time,uint32_t end_time)
 	uint8_t time1 = clocks/48;
 	return time1;
 }
+
+/********************************** SysTick_Handler() **********************************************************
+ *
+ * @name   -  SysTick_Handler()
+ * @brief  -  function to handle Systick interupt
+ * @param  -  none
+ *
+ * long description - This function handles Systick interrupt.
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+ /************************************ SysTick_Handler() function definition ***********************************/
 
 void SysTick_Handler(void)
 {
