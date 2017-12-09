@@ -1,4 +1,3 @@
-
 /***************************************************************************************************
  *
  * @author Shivam Khandelwal, Preshit Harlikar
@@ -34,7 +33,6 @@
 #define SIXTEEN_BIT_DESTINATION_MASK	(DMA_DCR_DSIZE(2))
 #define THIRTYTWO_BIT_DESTINATION_MASK	(DMA_DCR_DSIZE(0))
 
-
 /********************************** memmove_dma() ********************************************
  *
  * @name  memmove_dma
@@ -52,7 +50,9 @@
 
  /**************************** memmove_dma() function declaration **********************************/
 
+
 void memmove_dma(void *src, void *dst, uint32_t length, uint8_t size);
+
 
 /********************************** memset_dma() *************************************************
  *
@@ -71,6 +71,7 @@ void memmove_dma(void *src, void *dst, uint32_t length, uint8_t size);
  /**************************** memset_dma() function declaration **********************************/
 
 void memset_dma(uint8_t value, void *dst, uint32_t length, uint8_t size);
+
 
 /********************************** DMA0_IRQHandler() ********************************************************
  *

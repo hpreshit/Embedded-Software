@@ -24,7 +24,7 @@
 #include <stdio.h>
 
 
-Log_t log_buffer;                                                   //Initializing log buffer
+Log_t log_buffer;
 uint8_t Log_Tx_Data;
 
 uint8_t log_tag[20][26] = 		   {"<LOG INITIALIZED>	",
@@ -48,7 +48,6 @@ uint8_t log_tag[20][26] = 		   {"<LOG INITIALIZED>	",
 									"<DATA INPUT DISABLED>	",
 									"<DATA INPUT ENABLED>	"};
 
-
 /********************************** log_pass()**********************************************************
  *
  * @name   -  log_pass()
@@ -67,14 +66,16 @@ uint8_t log_tag[20][26] = 		   {"<LOG INITIALIZED>	",
 
 void log_pass(Log_Status id0,uint8_t *log_payload, uint8_t length){
 
+	//START_CRITICAL();
 	Log_Struct log_struct;					// log structure declared
 	log_struct.log_id0 = id0;				// log id
-	log_struct.timestamp = RTC->TSR;        // getting timestamp by reading TSR register
-	log_struct.payload = log_payload;       // passing log payload ptr
-	log_struct.len_payload = length;        // passing length of payload
+	log_struct.timestamp = RTC->TSR;		// getting timestamp by reading TSR register
+	log_struct.payload = log_payload;		// passing log payload ptr
+	log_struct.len_payload = length;		// passing length of payload
 
 	log_item(&log_struct);					// calling log_item to add log structure to log buffer
-
+	//END_CRITICAL();
+	//log_flag = 0x78;
 }
 
 /********************************** log_flush()**********************************************************
@@ -93,9 +94,9 @@ void log_pass(Log_Status id0,uint8_t *log_payload, uint8_t length){
 /************************************ log_flush() function definition ***********************************/
 
 void log_flush(void){
-	while(Log_buffer_is_empty(&log_buffer) != LOG_BUFFER_EMPTY){    // wait until log buffer is empty
-		Log_buffer_remove_item(&log_buffer, &Log_Tx_Data);          // write data to log_tx_data variable
-		UART_send(&Log_Tx_Data);                                    // Send log_tx_data through UART channel
+	while(Log_buffer_is_empty(&log_buffer) != LOG_BUFFER_EMPTY){ //wait until log buffer is empty
+		Log_buffer_remove_item(&log_buffer, &Log_Tx_Data);		 // write data to log_tx_data variable
+		UART_send(&Log_Tx_Data);								 // Send log_tx_data through UART channel
 	}
 }
 
@@ -114,193 +115,194 @@ void log_flush(void){
 
 /************************************* log_id() function definition *************************************/
 
+
 void log_id(Log_Status id,uint8_t *str){
 	switch(id){
-		case LOG_INITIALIZED:								// matching log id to pass the required payload
+		case LOG_INITIALIZED:								//matching log id to pass the required payload
 			log_pass(LOG_INITIALIZED,NULL,0);
 			if(log_mode != 0x43){							// send data in blocking mode
-				log_flush();}                               // send data using log flush if interrupt mode is not enabled
-			else{                                           // send data in non blocking mode
-				UART0_C2 &= ~UART0_C2_TIE_MASK;             // disable  UART Tx interrupt
-				UART0_C2 |= UART0_C2_TIE_MASK;}             // enable UART Tx interrupt
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
+			else{
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 		    break;
 
 		case GPIO_INITIALIZED:
 			log_pass(GPIO_INITIALIZED,NULL,0);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
           break;
 
 		case SYSTEM_INITIALIZED:
 			log_pass(SYSTEM_INITIALIZED,NULL,0);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
              break;
 
 		case SYSTEM_HALTED:
 			log_pass(SYSTEM_HALTED,NULL,0);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case INFO:
 			log_pass(INFO,NULL,0);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			delay();
 			log_string(str);
 			break;
 
 		case WARNING:
 			log_pass(WARNING,NULL,0);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
+			delay();
 			log_string(str);
 			break;
 
 		case ERROR:
 			log_pass(ERROR,NULL,0);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
+			delay();
 			log_string(str);
 			break;
 
 		case PROFILING_STARTED:
 			log_pass(PROFILING_STARTED,NULL,0);
-			if(log_mode != 0x43){							//send data using log flush if interrupt mode is not enabled
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case PROFILING_RESULT:
 			log_pass(PROFILING_RESULT,&time[1],3);
-			if(log_mode != 0x43){							//send data using log flush if interrupt mode is not enabled
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case PROFILING_COMPLETED:
 			log_pass(PROFILING_COMPLETED,NULL,0);
-			if(log_mode != 0x43){							//send data using log flush if interrupt mode is not enabled
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case DATA_RECEIVED:
 			log_pass(DATA_RECEIVED,&Rxd_Data,1);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case DATA_ANALYSIS_STARTED:
 			log_pass(DATA_ANALYSIS_STARTED,NULL,0);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case DATA_ALPHA_COUNT:
 			log_pass(DATA_ALPHA_COUNT,alpha,character_count[1]);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case DATA_NUMERIC_COUNT:
 			log_pass(DATA_NUMERIC_COUNT,num,character_count[0]);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case DATA_PUNCTUATION_COUNT:
 			log_pass(DATA_PUNCTUATION_COUNT,punc,character_count[2]);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case DATA_MISC_COUNT:
 			log_pass(DATA_MISC_COUNT,misc,character_count[3]);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case DATA_ANALYSIS_COMPLETED:
 			log_pass(DATA_ANALYSIS_COMPLETED,NULL,0);
-			if(log_mode != 0x43){
-				log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
 			break;
 
 		case HEARTBEAT:
-			//START_CRITICAL();
 			log_pass(HEARTBEAT,NULL,0);
-			if(log_mode != 0x43){
-			log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
-			//END_CRITICAL();
-            break;
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
+			break;
 
 		case DATA_INPUT_DISABLED:
 			log_pass(DATA_INPUT_DISABLED,NULL,0);
-			if(log_mode != 0x43){							//send data using log flush if interrupt mode is not enabled
-			log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
-		    break;
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
+			break;
 
 		case DATA_INPUT_ENABLED:
 			log_pass(DATA_INPUT_ENABLED,NULL,0);
-			if(log_mode != 0x43){							//send data using log flush if interrupt mode is not enabled
-			log_flush();}
+			if(log_mode != 0x43){							// send data in blocking mode
+				log_flush();}								//send data using log flush if interrupt mode is not enabled
 			else{
-				UART0_C2 &= ~UART0_C2_TIE_MASK;
-				UART0_C2 |= UART0_C2_TIE_MASK;}
-		    break;
+				UART0_C2 &= ~UART0_C2_TIE_MASK;				// disable  UART Tx interrupt
+				UART0_C2 |= UART0_C2_TIE_MASK;}				// enable UART Tx interrupt
+			break;
 
 		default:
              break;
@@ -323,16 +325,25 @@ void log_id(Log_Status id,uint8_t *str){
 
 void log_item(Log_Struct *ab){
 
-	uint8_t buffer[80];                                         	// buffer to store ascii values and add them to log buffer
-	uint8_t checksum;                                               // checksum variable
-	my_itoa(ab->timestamp,buffer,10);                               // converts timestamp to ascii string and store in buffer
-	uint8_t i = 1;
-			while(buffer[i] != 0){					                // adding timestamp to log buffer
-				Log_buffer_add_item(&log_buffer, &buffer[i]);       // calculating checksum
-				checksum ^= buffer[i];
+	uint8_t buffer[80];										//buffer to store ascii values and add them to log buffer
+	uint8_t i;
+	for(i=0;i<10;i++)
+	{
+		buffer[i]=0;
+	}
+	uint8_t checksum;										// checksum variable
+	my_itoa(ab->timestamp,buffer,10);						// converts timestamp to ascii string and store in buffer
+	i = 1;
+			while(buffer[i] != 0){							//adding timestamp to log buffer
+				Log_buffer_add_item(&log_buffer, &buffer[i]);
+				checksum ^= buffer[i];						// calculating checksum
 				i++;
 				buffer[i-1] = 0;
 			}
+	for(i=0;i<10;i++)
+	{
+		buffer[i]=0;
+	}
 	i=' ';
 	Log_buffer_add_item(&log_buffer,&i);
 	uint8_t y;
@@ -344,7 +355,7 @@ void log_item(Log_Struct *ab){
 		Log_buffer_add_item(&log_buffer,&i);
 
 	i = 0;
-		while(log_tag[y-100][i] != 0){							    // adding log tag to log buffer
+		while(log_tag[y-100][i] != 0){							// adding log tag to log buffer
 			checksum ^= log_tag[y-100][i];
 			Log_buffer_add_item(&log_buffer, &log_tag[y-100][i]);
 			i++;
@@ -356,21 +367,24 @@ void log_item(Log_Struct *ab){
 	i = 1;
 		while(buffer[i] != 0){
 			checksum ^= buffer[i];
-			Log_buffer_add_item(&log_buffer, &buffer[i]);		    // adding log id to log buffer
+			Log_buffer_add_item(&log_buffer, &buffer[i]);		//adding log id to log buffer
 			i++;
 			buffer[i-1] = 0;
 		}
-
+		for(i=0;i<10;i++)
+		{
+			buffer[i]=0;
+		}
 	//Log_buffer_add_item(&log_buffer, &bu);
 
 	i='	';
 	Log_buffer_add_item(&log_buffer,&i);
 
-	if(ab->payload != NULL){				                                // pass payload and length only if payload is not null
-		if(ab->log_id0==PROFILING_RESULT || ab->log_id0==DATA_RECEIVED)     // condition to check for profiling and data received
+	if(ab->payload != NULL){									//pass payload and length only if payload is not null
+		if(ab->log_id0==PROFILING_RESULT || ab->log_id0==DATA_RECEIVED)
 		{
-		my_itoa(ab->len_payload,buffer,10);
-		i=1;
+		//my_itoa(ab->len_payload,buffer,10);
+		//i=1;
 		while(buffer[i] != 0){
 		//Log_buffer_add_item(&log_buffer, &buffer[i]);
 		i++;
@@ -390,6 +404,10 @@ void log_item(Log_Struct *ab){
 			i++;
 			//buffer[i-1] = 0;
 		}
+			for(i=0;i<10;i++)
+			{
+				buffer[i]=0;
+			}
 			i = ' ';
 			Log_buffer_add_item(&log_buffer,&i);
 			Log_buffer_add_item(&log_buffer,&i);
@@ -410,6 +428,12 @@ void log_item(Log_Struct *ab){
 	Log_buffer_add_item(&log_buffer,&i);
 	my_itoa(checksum,buffer,10);
 	Log_buffer_add_item(&log_buffer,&buffer[1]);
+	for(i=0;i<10;i++)
+	{
+		buffer[i]=0;
+	}
+	i = '   ';
+	Log_buffer_add_item(&log_buffer,&i);
 
 	if(ab->log_id0!=INFO){
 		i='\r';
@@ -422,7 +446,6 @@ void log_item(Log_Struct *ab){
 		Log_buffer_add_item(&log_buffer,&i);
 		}
 }
-
 
 /********************************** log_string()**********************************************************
  *
@@ -441,9 +464,9 @@ void log_item(Log_Struct *ab){
 void log_string(uint8_t *str){
 	uint8_t d;
 	uint8_t i;
-	while(*str != 0){               // condition to send string data through UART channel
+	while(*str != 0){				// condition to send string data through UART channel
 		d = *str;
-		UART_send(&d);
+		UART_send(&d);				// send string through UART
 		str++;
 	}
 	i='\r';
@@ -476,7 +499,7 @@ void log_data(uint8_t *data, uint8_t length){
 	UART_send(&i);
 	i = 0;
 	uint8_t l;
-	while(i<length){                // condition to send length of data bytes through UART channel
+	while(i<length){						// condition to send length of data bytes through UART channel
 		l = *(data + i);
 		UART_send(&l);
 		i++;
@@ -503,7 +526,7 @@ void log_int(int32_t num){
 	uint8_t buffer[10];
 	uint8_t o = 1;
 	my_itoa(num,buffer,10);
-	while(buffer[o] != 0){              // condition to integer ascii string through UART channel
+	while(buffer[o] != 0){						// condition to send integer ascii string through UART channel
 		UART_send(&buffer[o]);
 		o++;
 	}
@@ -527,7 +550,7 @@ void uart_flush(uint8_t *str){
 	uint8_t d;
 	uint8_t i = '\t';
 	UART_send(&i);
-	while(*str != 0){
+	while(*str != 0){				// send string through UART using polling
 		d = *str;
 		UART_send(&d);
 		str++;

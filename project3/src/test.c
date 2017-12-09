@@ -42,7 +42,7 @@
 
 void profile_test()
 {
-	uart_flush("\n\r");
+	uart_flush("\n\r\n\r");
 	uart_flush("Number of bytes  ");
 	log_int(10);
 	log_int(100);
@@ -67,6 +67,16 @@ void profile_test()
 	my_memmove_test(1000);
 	log_int(t);
 	my_memmove_test(5000);
+	log_int(t);
+	uart_flush("\n\r");
+	uart_flush("my-memmove-O3  	");
+	my_memmove_test_optimized(10);
+	log_int(t);
+	my_memmove_test_optimized(100);
+	log_int(t);
+	my_memmove_test_optimized(1000);
+	log_int(t);
+	my_memmove_test_optimized(5000);
 	log_int(t);
 	uart_flush("\n\r");
 	uart_flush("dma-memmove	   ");
@@ -105,6 +115,16 @@ void profile_test()
 	my_memset_test(5000);
 	log_int(t);
 	uart_flush("\n\r");
+	uart_flush("my-memset-O3   	 ");
+	my_memset_test_optimized(10);
+	log_int(t);
+	my_memset_test_optimized(100);
+	log_int(t);
+	my_memset_test_optimized(1000);
+	log_int(t);
+	my_memset_test_optimized(5000);
+	log_int(t);
+	uart_flush("\n\r");
 	uart_flush("dma-memset	   ");
 	dma_memset_test(10);
 	log_int(t);
@@ -141,6 +161,7 @@ void spi_nrf_test()
 	config_reg_test();						//test function for config register
 	status_reg_test();						//test function for status register
 	fifo_status_reg_test();					//test function for fifo_status register
+	uart_flush("\n\r\n\r");
 	Rxd_Data=0;
 }
 
@@ -213,6 +234,7 @@ void tx_addr_test()
 	}
 	SPI_flush();
 }
+
 
 /********************************** rf_setup_test()**********************************************************
  *
@@ -560,6 +582,7 @@ void dma_memset_test(uint32_t len)
 
 /*********************************** my_memset_test() function definition ***********************************/
 
+
 void my_memset_test(uint32_t len)
 {
 	uint32_t value = 10;
@@ -626,4 +649,61 @@ void lib_memset_test(uint32_t len)
 	time[3]='\0';
 }
 
+void my_memmove_test_optimized(uint32_t len)
+{
+	uint32_t i=0;
+	uint8_t source[len];
+	while(i<(len))
+	{
+		source[i]=i;
+		i++;
+	}
+	uint8_t destination[len];
 
+	uint32_t start_time;
+	uint32_t end_time;
+
+	profiler_start();
+	start_time=gettime();
+	my_memmove_optimized(source,destination,len);
+	end_time=gettime();
+	profiler_stop();
+
+	t = execution_time(start_time,end_time);
+
+	my_itoa(t,time,10);
+	if(Rxd_Data!=44)
+	{
+		LOG(PROFILING_RESULT,NULL);
+	}
+	time[0]='\0';
+	time[1]='\0';
+	time[2]='\0';
+	time[3]='\0';
+}
+
+void my_memset_test_optimized(uint32_t len)
+{
+	uint32_t value = 10;
+	uint8_t destination[len];
+	uint32_t start_time;
+	uint32_t end_time;
+
+	profiler_start();
+	start_time=gettime();
+	my_memset_optimized(value,destination,len);
+	end_time=gettime();
+	profiler_stop();
+
+	t = execution_time(start_time,end_time);
+
+	my_itoa(t,time,10);
+	if(Rxd_Data!=44)
+	{
+		LOG(PROFILING_RESULT,NULL);
+	}
+	time[0]='\0';
+	time[1]='\0';
+	time[2]='\0';
+	time[3]='\0';
+}

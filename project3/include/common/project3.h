@@ -1,9 +1,17 @@
-/*
- * project3.h
+/***************************************************************************************************
  *
- *  Created on: Dec 5, 2017
- *      Author: Preshit
- */
+ * @author  Preshit Harlikar, Shivam Khandelwal
+ * @file project3.h
+ * @brief This file includes logging functions
+ * @date December 3, 2017
+ *
+ * long description - The logger.c file includes functions to -
+ *                      1) project3() to initialise logging functions
+ *                      2) data() to log data receive and data analysis
+ *                      3) profiling() to perform profiling function on library, NON-DMA and DMA
+ *                         memmove and memmset functions
+ *
+ ***************************************************************************************************/
 
 #ifndef SOURCES_PROJECT3_H_
 #define SOURCES_PROJECT3_H_
@@ -41,8 +49,40 @@ extern uint8_t *misc;
 extern uint8_t time[4];
 extern uint8_t t;
 
+/*********************************** project3() **********************************************************
+ *
+ * @name   -  project3()
+ * @brief  -  function to pass logs to log buffer and then print it to terminal through terminal
+ *
+ * long description - This function takes data input from user and depending on the received data
+ * 						it performs various logging functions such as data analysis and profiling
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
 void project3();
+
+/************************************ data() **********************************************************
+ *
+ * @name   -  data()
+ * @brief  -  function to perform data analysis on the data received through uart
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
 void data();
+
+/************************************ profiling() **********************************************************
+ *
+ * @name   -  profiling()
+ * @brief  -  function to perform profiling operation on library, NON-DMA and DMA memmove and memset functions
+ *
+ * @return -  void
+ *
+ ******************************************************************************************************/
+
 void profiling();
 
 #endif /* SOURCES_PROJECT3_H_ */

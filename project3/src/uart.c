@@ -1,4 +1,9 @@
-
+/*
+ * uart.c
+ *
+ *  Created on: 03-Dec-2017
+ *      Author: defaultuser0
+ */
 /***************************************************************************************************
  *
  * @author Shivam Khandelwal, Preshit Harlikar
@@ -167,6 +172,7 @@ UART_status UART_receive(uint8_t *data0)
 	}
 	return RX_SUCCESS;
 }
+
 
 /********************************** UART_receive_n() *****************************************************
  *

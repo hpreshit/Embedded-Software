@@ -94,7 +94,7 @@ CB_status CB_buffer_remove_item(CB_t *cb, volatile uint8_t *data);
 /********************************** CB_is_full() *****************************************************
  *
  * @name   -  CB_is_full()
- * @brief  -  function to check whether or not buffer is full
+ * @brief  -  a static inline function to check whether or not buffer is full
  * @param  -  *cb : pointer to circular buffer
  *
  * long description - This function checks whether or not buffer is full.
@@ -106,12 +106,18 @@ CB_status CB_buffer_remove_item(CB_t *cb, volatile uint8_t *data);
 
 /******************************** CB_is_full() function declaration ***********************************/
 
-CB_status CB_is_full(CB_t *cb);
+__attribute__((always_inline)) static inline CB_status CB_is_full(CB_t *cb)
+{
+    if (cb->count == cb->length)
+        return BUFFER_FULL;
+    else
+        return NULL_ERROR;
+}
 
 /********************************** CB_is_empty() *****************************************************
  *
  * @name   -  CB_is_empty()
- * @brief  -  function to check whether or not buffer is empty
+ * @brief  -  a static inline function to check whether or not buffer is empty
  * @param  -  *cb : pointer to circular buffer
  *
  * long description - This function checks whether or not buffer is empty.
@@ -123,7 +129,14 @@ CB_status CB_is_full(CB_t *cb);
 
 /******************************** CB_is_empty() function declaration ***********************************/
 
-CB_status CB_is_empty(CB_t *cb);
+//CB_status CB_is_empty(CB_t *cb);
+__attribute__((always_inline)) static inline CB_status CB_is_empty(CB_t *cb)
+{
+    if (cb->count == 0)
+        return BUFFER_EMPTY;
+    else
+        return NULL_ERROR;
+}
 
 /********************************** CB_peek() *****************************************************
  *

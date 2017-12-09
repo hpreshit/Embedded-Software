@@ -1,13 +1,3 @@
-/*
- * logger.h
- *
- *  Created on: 03-Dec-2017
- *      Author: defaultuser0
- */
-
-#ifndef SOURCES_LOGGER_H_
-#define SOURCES_LOGGER_H_
-
 /***************************************************************************************************
  *
  * @author  Preshit Harlikar, Shivam Khandelwal
@@ -28,6 +18,9 @@
  *
  ***************************************************************************************************/
 
+#ifndef SOURCES_LOGGER_H_
+#define SOURCES_LOGGER_H_
+
 #include <stdint.h>
 #include "MKL25Z4.h"
 #include <stdlib.h>
@@ -38,7 +31,7 @@
 #include "spi.h"
 
 
-#define LOG(id,str)						(log_id(id,str))
+#define LOG(id,str)							(log_id(id,str))
 #define LOG_DATA(data,length)			(log_data(*data,length))
 #define LOG_STRING(str)					(log_string(*str))
 #define LOG_INT(num)					(log_int(num))
@@ -46,6 +39,9 @@
 
 extern Log_t log_buffer;
 extern uint8_t Log_Tx_Data;
+
+
+/*******************************enum for LOG IDs*************************/
 
 typedef enum{
 	LOG_INITIALIZED = 100,
@@ -69,6 +65,9 @@ typedef enum{
 	DATA_INPUT_DISABLED,
 	DATA_INPUT_ENABLED
 }Log_Status;
+
+
+/***********************Structure for Logger*****************************/
 
 typedef struct{
 
@@ -95,7 +94,6 @@ typedef struct{
  ******************************************************************************************************/
 
 /*********************************** log_pass() function declaration ***********************************/
-
 void log_pass(Log_Status id0,uint8_t *log_payload, uint8_t length);
 
 /************************************** log_id()**********************************************************
@@ -146,8 +144,8 @@ void log_item(Log_Struct *ab);
 
 /************************************ log_flush() function declaration ***********************************/
 
-void log_flush(void);
 
+void log_flush(void);
 
 /********************************** log_string()**********************************************************
  *

@@ -17,6 +17,7 @@
 #include "profiler.h"
 #include "project3.h"
 
+
 /********************************** profiler_start() **********************************************************
  *
  * @name   -  profiler_start()
@@ -30,12 +31,11 @@
  ********************************************************************************************************/
 
 /************************************ profiler_start() function definition ***********************************/
-
 void profiler_start()
 {
 	SysTick->LOAD = SYSTICK_MAX_VALUE;
 	SysTick->VAL = 5;
-	SysTick->CTRL = 0x00000007;
+	SysTick->CTRL = 0x00000007;			//start timer
 	overflow=0;
 }
 
@@ -55,8 +55,9 @@ void profiler_start()
 
 void profiler_stop()
 {
-	SysTick->CTRL = 0x00;
+	SysTick->CTRL = 0x00;				//stop timer
 }
+
 
 /********************************** gettime() **********************************************************
  *
@@ -76,6 +77,7 @@ volatile uint32_t gettime()
 {
 	return SysTick->VAL;
 }
+
 
 /********************************** execution_time() **********************************************************
  *

@@ -1,5 +1,4 @@
 /***************************************************************************************************
- *
  * @author  Preshit Harlikar, Shivam Khandelwal
  * @file nordic.c
  * @brief This file includes functions to communicate and configure nrf module.
@@ -27,12 +26,12 @@
 /********************************** nrf_read_register() **********************************************************
  *
  * @name   -  nrf_read_register()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to read a value from a register of nordic module
+ * @param  -  register whose value is to be read
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function reads the value from the register and returns the value
  *
- * @return -  void
+ * @return -  a(register value)
  *
  ********************************************************************************************************/
 
@@ -53,10 +52,10 @@ uint8_t nrf_read_register(uint8_t reg)
 /********************************** nrf_write_register() **********************************************************
  *
  * @name   -  nrf_write_register()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to write a value to a register of nordic module
+ * @param  -  address of the register and the value  to be written in the register
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function writes a value to the specified register
  *
  * @return -  void
  *
@@ -77,12 +76,11 @@ void nrf_write_register(uint8_t reg, uint8_t value)
 /********************************** nrf_read_status() **********************************************************
  *
  * @name   -  nrf_read_status()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to read a value of status
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function reads the value from status register
  *
- * @return -  void
+ * @return -  a(register value)
  *
  ********************************************************************************************************/
 
@@ -100,12 +98,11 @@ uint8_t nrf_read_status()
 /********************************** nrf_read_config() **********************************************************
  *
  * @name   -  nrf_read_config()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to read a value of status
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function reads the value from config register
  *
- * @return -  void
+ * @return -  a(register value)
  *
  ********************************************************************************************************/
 
@@ -123,16 +120,16 @@ uint8_t nrf_read_config()
 /********************************** nrf_write_config() **********************************************************
  *
  * @name   -  nrf_write_config()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to write a value to config register
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function writes a value to config register
  *
  * @return -  void
  *
  ********************************************************************************************************/
 
-/************************************ nrf_write_config() function definition ***********************************/
+/************************************ nrf_read_config() function definition ***********************************/
+
 
 void nrf_write_config(uint8_t config)
 {
@@ -141,19 +138,20 @@ void nrf_write_config(uint8_t config)
 	nrf_chip_disable();						//chip disable
 }
 
+
 /********************************** nrf_read_rf_setup() **********************************************************
  *
  * @name   -  nrf_read_rf_setup()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to read a value of rf setup
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function reads the value from rf setup register
  *
- * @return -  void
+ * @return -  a(register value)
  *
  ********************************************************************************************************/
 
 /************************************ nrf_read_rf_setup() function definition ***********************************/
+
 
 uint8_t nrf_read_rf_setup()
 {
@@ -167,16 +165,15 @@ uint8_t nrf_read_rf_setup()
 /********************************** nrf_write_rf_setup() **********************************************************
  *
  * @name   -  nrf_write_rf_setup()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to write a value to rf setup register
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function writes a value to rf setup register
  *
  * @return -  void
  *
  ********************************************************************************************************/
 
-/************************************ nrf_write_rf_setup() function definition ***********************************/
+/************************************ nrf_read_rf_setup() function definition ***********************************/
 
 void nrf_write_rf_setup(uint8_t config)
 {
@@ -188,12 +185,11 @@ void nrf_write_rf_setup(uint8_t config)
 /********************************** nrf_read_rf_ch() **********************************************************
  *
  * @name   -  nrf_read_rf_ch()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to read a value of rf channel register
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function reads the value from rf channel register
  *
- * @return -  void
+ * @return -  a(register value)
  *
  ********************************************************************************************************/
 
@@ -210,17 +206,17 @@ uint8_t nrf_read_rf_ch()
 
 /********************************** nrf_write_rf_ch() **********************************************************
  *
- * @name   -  nrf_write_rf_ch()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @name   -  nrf_write_rf_channel()
+ * @brief  -  function to write a value to rf chennel register
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function writes a value to rf channel register
  *
  * @return -  void
  *
  ********************************************************************************************************/
 
-/************************************ nrf_write_rf_ch() function definition ***********************************/
+/************************************ nrf_read_rf_ch() function definition ***********************************/
+
 
 void nrf_write_rf_ch(uint8_t channel)
 {
@@ -232,12 +228,11 @@ void nrf_write_rf_ch(uint8_t channel)
 /********************************** nrf_read_TX_ADDR() **********************************************************
  *
  * @name   -  nrf_read_TX_ADDR()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to read a value of TX ADDR register
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function reads the value from TX ADDR register
  *
- * @return -  void
+ * @return -  a(register value)
  *
  ********************************************************************************************************/
 
@@ -262,16 +257,15 @@ void nrf_read_TX_ADDR(uint8_t *address)
 /********************************** nrf_write_TX_ADDR() **********************************************************
  *
  * @name   -  nrf_write_TX_ADDR()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to write a value to TX ADDR register
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function writes a value to TX ADDR register
  *
  * @return -  void
  *
  ********************************************************************************************************/
 
-/************************************ nrf_write_TX_ADDR() function definition ***********************************/
+/************************************ nrf_read_TX_ADDR() function definition ***********************************/
 
 void nrf_write_TX_ADDR(uint8_t *tx_addr)
 {
@@ -292,12 +286,11 @@ void nrf_write_TX_ADDR(uint8_t *tx_addr)
 /********************************** nrf_read_fifo_status() **********************************************************
  *
  * @name   -  nrf_read_fifo_status()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to read a value of fifo status register
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function reads the value from fifo status register
  *
- * @return -  void
+ * @return -  a(register value)
  *
  ********************************************************************************************************/
 
@@ -315,10 +308,9 @@ uint8_t nrf_read_fifo_status()
 /********************************** nrf_flush_rx_fifo() **********************************************************
  *
  * @name   -  nrf_flush_rx_fifo()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to write flush_rx command
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function writes a flush_rx command
  *
  * @return -  void
  *
@@ -337,10 +329,9 @@ void nrf_flush_rx_fifo()
 /********************************** nrf_flush_tx_fifo() **********************************************************
  *
  * @name   -  nrf_flush_tx_fifo()
- * @brief  -  function to initialize GPIO for nrf module.
- * @param  -  none
+ * @brief  -  function to write flush_tx command
  *
- * long description - This function initializes GPIO for nrf module
+ * long description - This function writes a flush_tx command
  *
  * @return -  void
  *

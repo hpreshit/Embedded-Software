@@ -1,11 +1,11 @@
 /***************************************************************************************************
  *
  * @author  Preshit Harlikar, Shivam Khandelwal
- * @file profiler.h
- * @brief This file includes function declarations of functions for profiling using Systick Timer.
+ * @file profiler.c
+ * @brief This file includes functions for profiling using Systick Timer.
  * @date November 29, 2017
  *
- * long description - The profiler.h file includes function declarations of functions to -
+ * long description - The profiler.c file includes functions to -
  *                      1) configure the Systick profiler (profiler_start())
  *                      2) disable profiling (profiler_stop())
  *                      3) get systick val (gettime())
@@ -39,8 +39,6 @@ uint32_t overflow;
  *
  ********************************************************************************************************/
 
-/************************************ profiler_start() function declaration ***********************************/
-
 void profiler_start();
 
 /********************************** profiler_stop() **********************************************************
@@ -55,8 +53,6 @@ void profiler_start();
  *
  ********************************************************************************************************/
 
-/************************************ profiler_stop() function declaration ***********************************/
-
 void profiler_stop();
 
 /********************************** gettime() **********************************************************
@@ -70,8 +66,6 @@ void profiler_stop();
  * @return -  systick value
  *
  ********************************************************************************************************/
-
-/************************************ gettime() function declaration ***********************************/
 
 volatile uint32_t gettime();
 
@@ -88,8 +82,6 @@ volatile uint32_t gettime();
  *
  ********************************************************************************************************/
 
-/************************************ execution_time() function declaration ***********************************/
-
 volatile uint32_t execution_time(uint32_t start_time,uint32_t end_time);
 
 /********************************** SysTick_Handler() **********************************************************
@@ -104,11 +96,6 @@ volatile uint32_t execution_time(uint32_t start_time,uint32_t end_time);
  *
  ********************************************************************************************************/
 
- /************************************ SysTick_Handler() function declaration ***********************************/
-
 void SysTick_Handler(void);
-
-
-
 
 #endif /* SOURCES_PROFILER_H_ */

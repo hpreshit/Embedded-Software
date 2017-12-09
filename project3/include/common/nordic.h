@@ -1,9 +1,25 @@
-/*
- * nordic.h
+/***************************************************************************************************
+ * @author  Preshit Harlikar, Shivam Khandelwal
+ * @file nordic.c
+ * @brief This file includes functions to communicate and configure nrf module.
+ * @date December 03, 2017
  *
- *  Created on: Nov 26, 2017
- *      Author: Preshit
- */
+ * long description - The nordic.c file includes functions to -
+ *                      1) nrf_read_register()
+ *                      2) nrf_write_register()
+ *                      3) nrf_read_status()
+ *                      4) nrf_read_config()
+ *                      5) nrf_write_config()
+ *                      6) nrf_read_rf_setup()
+ *                      7) nrf_write_rf_setup()
+ *                      8) nrf_read_rf_ch()
+ *                      9) nrf_read_TX_ADDR()
+ *                     10) nrf_write_TX_ADDR()
+ *                     11) nrf_read_fifo_status()
+ *                     12) nrf_flush_rx_fifo()
+ *                     13) nrf_flush_tx_fifo()
+ *
+ ***************************************************************************************************/
 
 #ifndef SOURCES_NORDIC_H_
 #define SOURCES_NORDIC_H_
@@ -78,20 +94,216 @@
 #define FIFO_STATUS_RX_FULL   (FIFO_STATUS_REG & (uint8_t)((uint8_t)(1)<<1))
 #define FIFO_STATUS_RX_EMPTY  (FIFO_STATUS_REG & (uint8_t)((uint8_t)(1)<<0))
 
+/********************************** nrf_read_register() **********************************************************
+ *
+ * @name   -  nrf_read_register()
+ * @brief  -  function to read a value from a register of nordic module
+ * @param  -  register whose value is to be read
+ *
+ * long description - This function reads the value from the register and returns the value
+ *
+ * @return -  a(register value)
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_register() function definition ***********************************/
 
 uint8_t nrf_read_register(uint8_t reg);
+
+ /********************************** nrf_write_register() **********************************************************
+  *
+  * @name   -  nrf_write_register()
+  * @brief  -  function to write a value to a register of nordic module
+  * @param  -  address of the register and the value  to be written in the register
+  *
+  * long description - This function writes a value to the specified register
+  *
+  * @return -  void
+  *
+  ********************************************************************************************************/
+
+ /************************************ nrf_write_register() function definition ***********************************/
+
 void nrf_write_register(uint8_t reg, uint8_t value);
+
+/********************************** nrf_read_status() **********************************************************
+ *
+ * @name   -  nrf_read_status()
+ * @brief  -  function to read a value of status
+ *
+ * long description - This function reads the value from status register
+ *
+ * @return -  a(register value)
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_status() function definition ***********************************/
+
 uint8_t nrf_read_status();
+
+/********************************** nrf_read_config() **********************************************************
+ *
+ * @name   -  nrf_read_config()
+ * @brief  -  function to read a value of status
+ *
+ * long description - This function reads the value from config register
+ *
+ * @return -  a(register value)
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_config() function definition ***********************************/
+
 uint8_t nrf_read_config();
+
+/********************************** nrf_write_config() **********************************************************
+ *
+ * @name   -  nrf_write_config()
+ * @brief  -  function to write a value to config register
+ *
+ * long description - This function writes a value to config register
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_config() function definition ***********************************/
+
 void nrf_write_config(uint8_t config);
+
+/********************************** nrf_read_rf_setup() **********************************************************
+ *
+ * @name   -  nrf_read_rf_setup()
+ * @brief  -  function to read a value of rf setup
+ *
+ * long description - This function reads the value from rf setup register
+ *
+ * @return -  a(register value)
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_rf_setup() function definition ***********************************/
+
 uint8_t nrf_read_rf_setup();
+
+/********************************** nrf_write_rf_setup() **********************************************************
+ *
+ * @name   -  nrf_write_rf_setup()
+ * @brief  -  function to write a value to rf setup register
+ *
+ * long description - This function writes a value to rf setup register
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_rf_setup() function definition ***********************************/
+
 void nrf_write_rf_setup(uint8_t config);
+
+/********************************** nrf_read_rf_ch() **********************************************************
+ *
+ * @name   -  nrf_read_rf_ch()
+ * @brief  -  function to read a value of rf channel register
+ *
+ * long description - This function reads the value from rf channel register
+ *
+ * @return -  a(register value)
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_rf_ch() function definition ***********************************/
+
 uint8_t nrf_read_rf_ch();
+
+/********************************** nrf_write_rf_ch() **********************************************************
+ *
+ * @name   -  nrf_write_rf_channel()
+ * @brief  -  function to write a value to rf chennel register
+ *
+ * long description - This function writes a value to rf channel register
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_rf_ch() function definition ***********************************/
+
 void nrf_write_rf_ch(uint8_t channel);
+
+/********************************** nrf_read_TX_ADDR() **********************************************************
+ *
+ * @name   -  nrf_read_TX_ADDR()
+ * @brief  -  function to read a value of TX ADDR register
+ *
+ * long description - This function reads the value from TX ADDR register
+ *
+ * @return -  a(register value)
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_TX_ADDR() function definition ***********************************/
+
 void nrf_read_TX_ADDR(uint8_t *address);
+
+/********************************** nrf_write_TX_ADDR() **********************************************************
+ *
+ * @name   -  nrf_write_TX_ADDR()
+ * @brief  -  function to write a value to TX ADDR register
+ *
+ * long description - This function writes a value to TX ADDR register
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_TX_ADDR() function definition ***********************************/
+
 void nrf_write_TX_ADDR(uint8_t *tx_addr);
+
+/********************************** nrf_read_fifo_status() **********************************************************
+ *
+ * @name   -  nrf_read_fifo_status()
+ * @brief  -  function to read a value of fifo status register
+ *
+ * long description - This function reads the value from fifo status register
+ *
+ * @return -  a(register value)
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_read_fifo_status() function definition ***********************************/
+
 uint8_t nrf_read_fifo_status();
+
+/********************************** nrf_flush_rx_fifo() **********************************************************
+ *
+ * @name   -  nrf_flush_rx_fifo()
+ * @brief  -  function to write flush_rx command
+ *
+ * long description - This function writes a flush_rx command
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_flush_rx_fifo() function definition ***********************************/
+
 void nrf_flush_tx_fifo();
+
+/********************************** nrf_flush_tx_fifo() **********************************************************
+ *
+ * @name   -  nrf_flush_tx_fifo()
+ * @brief  -  function to write flush_tx command
+ *
+ * long description - This function writes a flush_tx command
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ nrf_flush_tx_fifo() function definition ***********************************/
+
 void nrf_flush_rx_fifo();
 
 #endif /* SOURCES_NORDIC_H_ */
