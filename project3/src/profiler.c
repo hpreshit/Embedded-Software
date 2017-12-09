@@ -1,9 +1,18 @@
-/*
- * profiler.c
+/***************************************************************************************************
  *
- *  Created on: Dec 3, 2017
- *      Author: Preshit
- */
+ * @author  Preshit Harlikar, Shivam Khandelwal
+ * @file profiler.c
+ * @brief This file includes functions for profiling using Systick Timer.
+ * @date November 29, 2017
+ *
+ * long description - The profiler.c file includes functions to -
+ *                      1) configure the Systick profiler (profiler_start())
+ *                      2) disable profiling (profiler_stop())
+ *                      3) get systick val (gettime())
+ *                      4) calculate execution time (execution_time())
+ *                      5) handle Systick interupt (SysTick_Handler())
+ *
+ ***************************************************************************************************/
 
 #include "profiler.h"
 #include "project3.h"

@@ -1,12 +1,32 @@
-/*
- * gpio.c
+/***************************************************************************************************
  *
- *  Created on: Dec 3, 2017
- *      Author: Preshit
- */
+ * @author  Preshit Harlikar, Shivam Khandelwal
+ * @file gpio.c
+ * @brief This file includes functions to initialize GPIO pin/port.
+ * @date December 01, 2017
+ *
+ * long description - The gpio.c file includes functions to -
+ *                      1) initialize GPIO for nrf module(GPIO_nrf_init())
+ *                      2) initialize GPIO for on-board led(GPIO_led_init())
+ *
+ ***************************************************************************************************/
 
 #include "gpio.h"
 #include "logger.h"
+
+/********************************** GPIO_nrf_init() **********************************************************
+ *
+ * @name   -  GPIO_nrf_init()
+ * @brief  -  function to initialize GPIO for nrf module.
+ * @param  -  none
+ *
+ * long description - This function initializes GPIO for nrf module
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ GPIO_nrf_init() function definition ***********************************/
 
 void GPIO_nrf_init()
 {
@@ -19,6 +39,20 @@ void GPIO_nrf_init()
 	PTD_BASE_PTR->PDDR |= 0x01; 				//Set pin 1 port D i.e PCS as output direction
 	LOG(GPIO_INITIALIZED,NULL);
 }
+
+/********************************** GPIO_led_init() **********************************************************
+ *
+ * @name   -  GPIO_led_init()
+ * @brief  -  function to initialize GPIO for on-board LED.
+ * @param  -  none
+ *
+ * long description - This function initializes GPIO for on-board LED.
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ GPIO_led_init() function definition ***********************************/
 
 void GPIO_led_init()
 {

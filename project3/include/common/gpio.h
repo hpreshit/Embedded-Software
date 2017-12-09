@@ -1,9 +1,15 @@
-/*
- * gpio.h
+/***************************************************************************************************
  *
- *  Created on: Dec 3, 2017
- *      Author: Preshit
- */
+ * @author  Preshit Harlikar, Shivam Khandelwal
+ * @file gpio.h
+ * @brief This file includes function declarations of functions to initialize GPIO pin/port.
+ * @date December 01, 2017
+ *
+ * long description - The gpio.h file includes functions declarations of functions to -
+ *                      1) initialize GPIO for nrf module(GPIO_nrf_init())
+ *                      2) initialize GPIO for on-board led(GPIO_led_init())
+ *
+ ***************************************************************************************************/
 
 #ifndef SOURCES_GPIO_H_
 #define SOURCES_GPIO_H_
@@ -27,7 +33,36 @@
 #define GREEN_LED_TOGGLE	(GPIOB->PTOR |= 1 << 19)	//port B pin 19 toggle
 #define BLUE_LED_TOGGLE		(GPIOD->PTOR |= 1 << 1)		//port D pin 1 toggle
 
+/********************************** GPIO_nrf_init() **********************************************************
+ *
+ * @name   -  GPIO_nrf_init()
+ * @brief  -  function to initialize GPIO for nrf module.
+ * @param  -  none
+ *
+ * long description - This function initializes GPIO for nrf module
+ *
+ * @return -  void
+ *
+ ********************************************************************************************************/
+
+/************************************ GPIO_nrf_init() function declaration ***********************************/
+
 void GPIO_nrf_init();
+
+/********************************** GPIO_led_init() **********************************************************
+ *
+ * @name   -  GPIO_led_init()
+ * @brief  -  function to initialize GPIO for on-board LED.
+ * @param  -  none
+ *
+ * long description - This function initializes GPIO for on-board LED.
+ *
+ * @return -  void
+ *
+ *************************************************************************************************************/
+
+/************************************ GPIO_led_init() function declaration ***********************************/
+
 void GPIO_led_init();
 
 
