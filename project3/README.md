@@ -8,7 +8,7 @@ Profiling Test Results:
 	           10 bytes	 100 bytes	1000 bytes	5000 bytes
 lib-memmove	      3	        20	       188	       170
 my-memmove	      7	        55	        31	       150
-my-memmove-O3	  2	         6	        48	       236
+my-memmove-O3	      2	         6	        48	       236
 dma-memmove	      8	        12	        50	       216
 
 2) Profiling time for memset functions for 1 byte data (Time in micro seconds)
