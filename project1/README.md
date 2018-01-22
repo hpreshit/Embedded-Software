@@ -1,4 +1,7 @@
 This project consists of deleloping embedded C-programming code, integrate the code with the build system and gain experience with Git version Control.
+
+
+
 The objectives of this project are:
     1) Incorporate a C-program application into Make and GCC build system.
     2) Write C-program functions that manipulate memory.
