@@ -1,5 +1,11 @@
+This project involves writing a binary logger application for a microcontroller that uses the prior work with the UART and Circular Buffers. A logger enables one to report data to a PC, this helps to interpret what is happening with the embedded system. This application is extended to use DMA as a mechanism to off-load transmitting of the data. The execution time of various operations is documented using a profiler and the systick counter. In the last part of this project, this code is leveraged to communicate with the Nordic Wireless transceiver via the Serial Peripheral Interface (SPI).
 
-
+The objectives of this project are:
+    1) Use DMA to perform data memory movements.
+    2) Enhance the circular buffer code to be more efficient and robust.
+    3) Develop a binary ogger o end ata o  UART.
+    4) Profile the library functions to determine execution time.
+    5) Create a SPI driver to interface with a Nordic Wireless transceiver.
 
 
 Profiling Test Results:
